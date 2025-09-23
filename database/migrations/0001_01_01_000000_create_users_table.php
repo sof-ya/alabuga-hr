@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name')->comment('Имя пользователя');
+            $table->string('nikname')->comment('Ник пользователя');
+            $table->text('image_url')->nullable()->comment('Иконка пользователя');
+            $table->string('email')->unique()->comment('Электронная почта пользователя');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->integer('experience')->comment('Количество очков опыта');
-            $table->integer('mana')->comment('Сумма игровой валюты (маны)');
+            $table->string('password')->comment('Хэш пароля пользователя');
+            $table->integer('experience')->comment('Опыт пользователя');
+            $table->integer('gold')->comment('Количество денег у пользователя');
+            $table->date('birthday_date')->nullable()->comment('Дата рождения пользователя');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

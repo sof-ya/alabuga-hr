@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('ranks', function (Blueprint $table) {
             $table->id();
             $table->string('name')->comment('Название ранга');
-            $table->text('description')->nullable()->comment('Описание');
-            $table->integer('required_experience')->comment('Количество опыта, необходимое для получения ранга');
-            $table->foreignId('required_role_id')->index()->comment('Идентификатор роли');
+            $table->text('description')->nullable()->comment('Описание ранга');
+            $table->text('image_url')->nullable()->comment('Изображение ранга');
+            $table->integer('required_experience')->comment('Требуемый опыт для получения ранга');
+            $table->foreignId('required_role_id')->index()->comment('Требуемая роль для получения ранга');
             $table->timestamps();
             $table->softDeletes();
         });

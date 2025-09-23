@@ -19,11 +19,12 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Test User',
+            'nikname' => 'Test_User',
             'email' => 'test@example.com',
             'role_id' => Role::first()->id,
             'rank_id' => Rank::first()->id,
             'experience' => 0,
-            'mana' => 10
+            'gold' => 10
         ]);
     }
 }
