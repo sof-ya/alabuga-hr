@@ -2,23 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Role extends Model
+class MissionCategory extends Model
 {
-    use SoftDeletes;
-
+    use HasFactory;
+    
     protected $fillable = [
-        'name'
+        'name',
+        'description'
     ];
 
-    public function users(): HasMany
-    {
-        return $this->hasMany(User::class);
-    }
-    
     public function missions() : HasMany {
         return $this->hasMany(Mission::class);
     }

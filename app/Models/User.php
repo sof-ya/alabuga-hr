@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class User extends Authenticatable
 {
@@ -41,8 +45,10 @@ class User extends Authenticatable
 
     protected $with = [
         'role',
-        'rank'
+        'rank',
+        'missions'
     ];
+
 
     /**
      * Get the attributes that should be cast.
@@ -65,5 +71,10 @@ class User extends Authenticatable
     public function rank(): BelongsTo
     {
         return $this->belongsTo(Rank::class);
+    }
+
+    public function missions() : BelongsToMany
+    {
+        return $this->belongsToMany(Mission::class, 'user_missions');
     }
 }

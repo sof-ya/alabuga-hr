@@ -17,6 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        $this->call(MissionCategorySeeder::class);
+        $this->call(СompetenceSeeder::class);
+        $this->call(MissionSeeder::class);
+        $this->call(MissionRewardCompetenceSeeder::class);
+
         User::factory()->create([
             'name' => 'Test User',
             'nikname' => 'Test_User',

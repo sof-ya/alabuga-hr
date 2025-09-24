@@ -20,4 +20,8 @@ class Rank extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function missions() : HasMany {
+        return $this->hasMany(Mission::class);
+    }
 }
