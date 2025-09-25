@@ -20,7 +20,8 @@ return new class extends Migration
             $table->unsignedInteger('mission_id')->comment('Идентификатор миссии');
             $table->foreign('mission_id')->references('id')->on('missions')->index('mission_id')->onDelete('cascade')->comment('Идентификатор миссии');
             
-            $table->string('result')->comment('Статус миссии для пользователя');
+            $table->string('status_mission')->comment('Статус миссии для пользователя');
+            $table->json('result')->comment('Результат выполнение миссии для пользователя');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->comment('Название категории');
             $table->text('description')->nullable()->comment('Описание категории');
             $table->text('image_url')->nullable()->comment('Иконка миссии');
-            $table->timestamp('completion_deadline')->nullable();
+            $table->timestamp('completion_deadline')->nullable()->comment('Дедлайн выполнения миссии');
 
             $table->unsignedInteger('mission_category_id')->comment('Идентификатор типа миссии');
             $table->foreign('mission_category_id')->references('id')->on('mission_categories')->index('mission_category_id')->onDelete('cascade');
@@ -28,8 +28,10 @@ return new class extends Migration
             $table->foreign('requirement_rank_id')->references('id')->on('ranks')->index('requirement_rank_id')->onDelete('cascade');
 
             $table->integer('requirement_experience')->comment('Необходимое значение опыта');
-            $table->boolean('is_visible')->comment('Флаг видимости миссии (серым), если она пока недоступна');
-            $table->boolean('is_active')->comment('Флаг активности миссии (вкл/выкл)');
+            $table->boolean('is_visible')->default(true)->comment('Флаг видимости миссии (серым), если она пока недоступна');
+            $table->boolean('is_active')->default(true)->comment('Флаг активности миссии (вкл/выкл)');
+            $table->boolean('is_requirement_text')->default(false)->comment('Флаг обязательности для описания результата');
+            $table->boolean('is_requirement_file')->default(false)->comment('Флаг обязательности для прикрепления файла');
             $table->integer('reward_experience')->comment('Опыт за завершение миссии');
             $table->integer('reward_gold')->comment('Золото за завершение миссии');
             $table->timestamps();
