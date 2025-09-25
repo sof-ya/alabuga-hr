@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->comment('Название категории');
             $table->text('description')->nullable()->comment('Описание категории');
-            $table->text('image_url')->nullable()->comment('Иконка пользователя');
+            $table->text('image_url')->nullable()->comment('Иконка миссии');
             $table->timestamp('completion_deadline')->nullable();
 
             $table->unsignedInteger('mission_category_id')->comment('Идентификатор типа миссии');
