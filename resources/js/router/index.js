@@ -4,7 +4,7 @@ const routes = [
     {
         path: '/',
         name: 'Home',
-        component: () => import('../components/Home.vue'),
+        component: () => import('../components/Pages/HomePage.vue'),
         meta: {
             title: 'Главная'
         }
@@ -12,15 +12,87 @@ const routes = [
     {
         path: '/about',
         name: 'About',
-        component: () => import('../components/About.vue'),
+        component: () => import('../components/Pages/AboutPage.vue'),
         meta: {
             title: 'О нас'
         }
     },
     {
+        path: '/lk',
+        name: 'userPage',
+        component: () => import('../components/Pages/LkPage.vue'),
+        meta: {
+            title: 'userPage'
+        }
+    },
+    {
+        path: '/shop',
+        name: 'shop',
+        component: () => import('../components/Pages/ShopPage.vue'),
+        meta: {
+            title: 'shop'
+        }
+    },
+    {
+        path: '/warehouse',
+        name: 'Хранилище',
+        component: () => import('../components/Pages/WarehousePage.vue'),
+        meta: {
+            title: 'Хранилище'
+        }
+    },
+    {
+        path: '/competencies',
+        name: 'Competencies',
+        component: () => import('../components/Pages/CompetenciesPage.vue'),
+        meta: {
+            title: 'Компетенции'
+        }
+    },
+    {
+        path: '/missions',
+        name: 'Missions',
+        component: () => import('../components/Pages/MissionsPage.vue'),
+        meta: {
+            title: 'Миссии'
+        }
+    },
+    {
+        path: '/raiting',
+        name: 'raiting',
+        component: () => import('../components/Pages/RaitingPage.vue'),
+        meta: {
+            title: 'Рейтинг'
+        }
+    },
+    {
+        path: '/log',
+        name: 'log',
+        component: () => import('../components/Pages/LogPage.vue'),
+        meta: {
+            title: 'Журнал действия'
+        }
+    },       
+    {
+        path: '/notifications',
+        name: 'notifications',
+        component: () => import('../components/Pages/NotificationPage.vue'),
+        meta: {
+            title: 'Журнал действия'
+        }
+    },      
+    {
+        path: '/login',
+        name: 'log',
+        component: () => import('../components/Pages/LoginPage.vue'),
+        meta: {
+            title: 'Форма входа'
+        }
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
-        component: () => import('../components/NotFound.vue'),
+        component: () => import('../components/Pages/NotFound.vue'),
         meta: {
             title: 'Страница не найдена'
         }
