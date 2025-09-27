@@ -2,6 +2,8 @@
 
         <LkLayout>
         homePage
+        <button
+        @click="callToast">CallToast</button>
         <div class="flex flex-col gap-2">
         <router-link
         v-for="link in links"
@@ -14,7 +16,9 @@
 
 <script setup>
 
+import { useSiteState } from '../../store/SiteState';
 import LkLayout from '../Layout/LkLayout.vue';
+const siteState = useSiteState()
 const links =[
     {
         route:'/',
@@ -45,4 +49,7 @@ const links =[
         name:'логи'
     },
 ]
+const callToast =()=>{
+    siteState.sucsesMessage='Изменения профиля успешно сохранены'
+}
 </script>
