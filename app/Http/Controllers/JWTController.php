@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OAT;
 
@@ -40,7 +40,7 @@ class JWTController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials, ['exp' => Carbon\Carbon::now()->addDays(7)->timestamp])) {
+        if (! $token = auth()->attempt($credentials, ['exp' => Carbon::now()->addDays(7)->timestamp])) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 

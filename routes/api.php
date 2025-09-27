@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\JWTController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
 Route::as('api.')->group(function () {
-    
+    Route::middleware(['jwt.auth'])->group(function () {
+        Route::apiResource('store', StoreController::class)->only(['index']);
+    });
 });
 
 Route::prefix('auth')->controller(JWTController::class)->group(function () {
