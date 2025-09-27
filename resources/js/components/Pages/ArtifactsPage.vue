@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        страница NotificationPage.vue
+        страница ArtifactsPage.vue
     </MainLayout>
 </template>
 

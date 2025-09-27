@@ -80,6 +80,14 @@ const routes = [
         meta: {
             title: 'Журнал действия'
         }
+    },  
+    {
+        path: '/artifacts',
+        name: 'artifacts',
+        component: () => import('../components/Pages/ArtifactsPage.vue'),
+        meta: {
+            title: 'Журнал действия'
+        }
     },      
     {
         path: '/login',

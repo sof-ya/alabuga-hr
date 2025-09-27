@@ -24,28 +24,8 @@ const links =[
         name:'userPage'
     },
     {
-        route:'shop',
-        name:'shop'
-    },
-    {
         route:'warehouse',
         name:'warehouse'
-    },
-    {
-        route:'competencies',
-        name:'competencies'
-    },
-    {
-        route:'competencies',
-        name:'competencies'
-    },
-    {
-        route:'missions',
-        name:'missions'
-    },    
-    {
-        route:'raiting',
-        name:'Raiting'
     },
     {
         route:'login',

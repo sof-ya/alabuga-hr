@@ -1,20 +1,16 @@
 <template>
-    <div id="app" class="min-h-screen bg-gray-50">
-        <HeaderComponent/>
+    <div id="app" class="min-h-screen bg-gray-50 max-w-[640px] overflow-hidden mx-auto">
         
-        <main class="container mx-auto px-4 py-8">
+        <main class="container mx-auto ">
             <RouterView />
         </main>
         
-        <FooterComponent/>
     </div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue';
 import { RouterView } from 'vue-router';
-import HeaderComponent from './components/general/HeaderComponent.vue';
-import FooterComponent from './components/general/FooterComponent.vue';
 
 onMounted(() => {
     console.log('Vue 3 App mounted with Composition API');
