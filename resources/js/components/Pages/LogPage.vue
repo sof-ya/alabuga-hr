@@ -4,7 +4,7 @@
     </LkLayout>
 </template>
 
-<script setup>
+<script>
 import LkLayout from '../Layout/LkLayout.vue';
 
 </script>
