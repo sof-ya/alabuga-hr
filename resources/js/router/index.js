@@ -66,8 +66,8 @@ const routes = [
         }
     },
     {
-        path: '/log',
-        name: 'log',
+        path: '/actionlog',
+        name: 'actionlog',
         component: () => import('../components/Pages/LogPage.vue'),
         meta: {
             title: 'Журнал действия'

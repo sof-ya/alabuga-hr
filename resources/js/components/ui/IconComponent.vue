@@ -15,7 +15,7 @@ const props = defineProps({
   name: {
     type: String,
     required: true,
-    validator: (value) => ['home', 'missions', 'artifacts', 'rating', 'competencies', 'shop'].includes(value)
+    validator: (value) => ['arrow','home', 'missions', 'artifacts', 'rating', 'competencies', 'shop', 'dongle'].includes(value)
   },
   isActive: {
     type: Boolean,
@@ -40,6 +40,6 @@ const iconClass = computed(() => ({
 }
 
 .icon--active {
-  fill: #005DAC;
+  @apply fill-mainColor
 }
 </style>

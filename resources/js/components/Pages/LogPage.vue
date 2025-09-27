@@ -1,11 +1,11 @@
 <template>
-    <MainLayout>
+    <LkLayout>
         страница LogPage.vue
-    </MainLayout>
+    </LkLayout>
 </template>
 
-<script setup>
-import MainLayout from '../Layout/MainLayout.vue';
+<script>
+import LkLayout from '../Layout/LkLayout.vue';
 
 </script>
 

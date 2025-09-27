@@ -49,7 +49,7 @@ defineProps({
 }
 
 .nav-item--active {
-  color: #005DAC;
+ @apply text-mainColor
 }
 
 .nav-item__label {
@@ -59,6 +59,6 @@ defineProps({
 }
 
 .nav-item:hover {
-  color: #005DAC;
+   @apply text-mainColor
 }
 </style>

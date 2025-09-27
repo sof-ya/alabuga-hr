@@ -36,7 +36,7 @@ const isActive = (path) => {
 <style scoped>
 .footer{
     box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.16);
-background: var(--white-500);
+    background: var(--white-500);
 }
 
 </style>
