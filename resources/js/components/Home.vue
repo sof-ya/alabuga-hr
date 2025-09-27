@@ -76,9 +76,10 @@
 <script setup>
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useCounterStore } from '../stores/counter';
+import { useCounterStore } from '../store/counter';
 
-const counterStore = useCounterStore();
+
+const counterStore =useCounterStore();
 
 // Используем хранилище
 const { count, doubleCount, isEven } = storeToRefs(counterStore);

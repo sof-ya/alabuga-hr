@@ -17,9 +17,10 @@ export default defineConfig({
             },
         }),
     ],
-    resolve: {
-        alias: {
-            vue: 'vue/dist/vue.esm-bundler.js',
-        },
+    css: {
+        postcss: './postcss.config.js',
     },
+    optimizeDeps: {
+        include: ['vue', 'vue-router', 'pinia']
+    }
 });
