@@ -1,6 +1,6 @@
 <script setup>
 import FooterComponent from '../general/FooterComponent.vue';
-import HeaderComponent from '../general/HeaderComponent.vue';
+import LkHeaderComponent from '../general/LkHeaderComponent.vue';
 
 
 
@@ -9,7 +9,7 @@ import HeaderComponent from '../general/HeaderComponent.vue';
 <template>
 
     <div class=" grid grid-rows-[50px_1fr_auto] h-screen">
-        <HeaderComponent/>
+        <LkHeaderComponent/>
             <slot></slot>
         <FooterComponent/>
     </div>

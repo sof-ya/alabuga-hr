@@ -1,11 +1,11 @@
 <template>
-    <MainLayout>
+    <LkLayout>
         LkPage
-    </MainLayout>
+    </LkLayout>
 </template>
 
 <script setup>
-import MainLayout from '../Layout/MainLayout.vue';
+import LkLayout from '../Layout/LkLayout.vue';
 
 
 

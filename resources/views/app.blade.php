@@ -10,6 +10,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased">
+    <div style="display: none;">
+        {!! file_get_contents(resource_path('js/assets/sprite.svg')) !!}
+    </div>
     <div id="app"></div>
 </body>
 </html>

@@ -66,8 +66,8 @@ const routes = [
         }
     },
     {
-        path: '/log',
-        name: 'log',
+        path: '/actionlog',
+        name: 'actionlog',
         component: () => import('../components/Pages/LogPage.vue'),
         meta: {
             title: 'Журнал действия'
@@ -77,6 +77,14 @@ const routes = [
         path: '/notifications',
         name: 'notifications',
         component: () => import('../components/Pages/NotificationPage.vue'),
+        meta: {
+            title: 'Журнал действия'
+        }
+    },  
+    {
+        path: '/artifacts',
+        name: 'artifacts',
+        component: () => import('../components/Pages/ArtifactsPage.vue'),
         meta: {
             title: 'Журнал действия'
         }

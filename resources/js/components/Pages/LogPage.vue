@@ -1,18 +1,12 @@
 <template>
-    <MainLayout>
+    <LkLayout>
         страница LogPage.vue
-    </MainLayout>
+    </LkLayout>
 </template>
 
-<script>
-import MainLayout from '../Layout/MainLayout.vue';
+<script setup>
+import LkLayout from '../Layout/LkLayout.vue';
 
-
-    export default {
-
-    
-
-}
 </script>
 
 <style lang="scss" scoped>
