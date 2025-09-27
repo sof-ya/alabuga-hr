@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::as('api.')->group(function () {
     Route::middleware(['jwt.auth'])->group(function () {
         Route::apiResource('store', StoreController::class)->only(['index']);
+        Route::patch('/store/buy/{item}', [StoreController::class, 'buy']);
     });
 });
 

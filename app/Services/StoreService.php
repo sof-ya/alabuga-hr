@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\StoreItem;
-use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class StoreService
@@ -19,5 +18,11 @@ class StoreService
         }
 
         return $builder->paginate(perPage: $perPage, page: $page);
+    }
+
+    public function buyItem(StoreItem $storeItem) : void {
+        auth()->user()->storeItems()->attach($storeItem->id);
+        auth()->user()->gold -= $storeItem->price;
+        auth()->user()->save();
     }
 }

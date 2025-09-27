@@ -95,4 +95,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Mission::class, 'user_missions');
     }
+
+    public function storeItems() : BelongsToMany
+    {
+        return $this->belongsToMany(StoreItem::class, 'user_purchases');
+    }
 }

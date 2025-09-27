@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Responses\BaseResponse;
 use App\Models\StoreItem;
 use App\Services\StoreService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -12,8 +13,7 @@ class StoreController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, StoreService $service)
-    {
+    public function index(Request $request, StoreService $service) : BaseResponse {
         $validated = $request->validate([
             'page' => 'integer',
             'perPage' => 'integer',
@@ -22,6 +22,19 @@ class StoreController extends Controller
         ]);
 
         return new BaseResponse($service->index(...$validated));
+    }
+
+    public function buy(StoreItem $item, StoreService $service) : BaseResponse|JsonResponse {
+
+        if($item->price > auth()->user()->gold) {
+            return response()->json([
+                'message' => 'Недостаточно средств для покупки товара.',
+            ], 403);
+        }
+
+        $service->buyItem($item);
+
+        return new BaseResponse(['stire_item_id' => $item->id]);
     }
 
     /**
