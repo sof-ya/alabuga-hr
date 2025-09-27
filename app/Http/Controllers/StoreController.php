@@ -7,12 +7,28 @@ use App\Models\StoreItem;
 use App\Services\StoreService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OAT;
 
 class StoreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    #[OAT\Get(
+        path: '/api/store',
+        summary: 'Get store items',
+        tags: ['store'],
+        parameters: [
+            new OAT\Parameter(ref: '#/components/parameters/page'),
+            new OAT\Parameter(ref: '#/components/parameters/per_page'),
+            new OAT\Parameter(ref: '#/components/parameters/in_storage'),
+            new OAT\Parameter(ref: '#/components/parameters/only_available'),
+        ],
+        security: [["JWT" => []]],
+        responses: [new OAT\Response(
+            response: JsonResponse::HTTP_OK,
+            description: 'Successful response',
+            content: new OAT\JsonContent(type: 'array', items: new OAT\Items('#/components/schemas/StoreItem')))
+        ],
+    )]
+    
     public function index(Request $request, StoreService $service) : BaseResponse {
         $validated = $request->validate([
             'page' => 'integer',
@@ -24,6 +40,18 @@ class StoreController extends Controller
         return new BaseResponse($service->index(...$validated));
     }
 
+    #[OAT\Patch(
+        path: '/api/store/buy/{id}',
+        summary: 'Buy store item',
+        tags: ['store'],
+        parameters: [new OAT\Parameter(ref: '#/components/parameters/id')],
+        security: [["JWT" => []]],
+        responses: [
+            new OAT\Response('#/components/responses/ErrorResponse', JsonResponse::HTTP_BAD_REQUEST),
+            new OAT\Response('#/components/responses/ValidationErrorsResponse', JsonResponse::HTTP_UNPROCESSABLE_ENTITY),
+        ],
+
+    )]
     public function buy(StoreItem $item, StoreService $service) : BaseResponse|JsonResponse {
 
         if($item->price > auth()->user()->gold) {

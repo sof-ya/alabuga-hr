@@ -47,11 +47,14 @@ class JWTController extends Controller
         return $this->respondWithToken($token);
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    #[OAT\Post(
+            path: '/api/auth/me',
+            description: 'Get the authenticated User.',
+            tags: ['auth'],
+            responses: [
+                new OAT\Response(response: JsonResponse::HTTP_OK, description: 'User', content: new OAT\JsonContent(ref: '#/components/schemas/User')),
+            ],
+        )]
     public function me()
     {
         return response()->json(auth()->user());

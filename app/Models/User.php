@@ -10,6 +10,25 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use OpenApi\Attributes as OAT;
+
+#[OAT\Schema(
+    properties: [
+        new OAT\Property(property: 'id', type: 'integer', format: 'int64', minimum: 1),
+        new OAT\Property(property: 'name', type: 'string', format: 'email'),
+        new OAT\Property(property: 'nikname', type: 'string', format: 'email'),
+        new OAT\Property(property: 'image_url', type: 'string'),
+        new OAT\Property(property: 'email', type: 'string', maxLength: 255),
+        new OAT\Property(property: 'experience', type: 'integer'),
+        new OAT\Property(property: 'gold', type: 'integer'),
+        new OAT\Property(property: 'role_id', type: 'integer', format: 'int64', minimum: 1),
+        new OAT\Property(property: 'rank_id', type: 'integer', format: 'int64', minimum: 1),
+        
+        new OAT\Property(property: 'created_at', type: 'string', format: 'date-time', nullable: true),
+        new OAT\Property(property: 'updated_at', type: 'string', format: 'date-time', nullable: true),
+        new OAT\Property(property: 'deleted_at', type: 'string', format: 'date-time', nullable: true),
+    ],
+)]
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -26,7 +45,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'experience',
-        'mana'
+        'gold'
     ];
 
     /**
