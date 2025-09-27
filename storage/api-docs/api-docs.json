@@ -10,8 +10,8 @@
                 "tags": [
                     "auth"
                 ],
-                "description": "Get token.",
-                "operationId": "8dcb70df1020986038d098cc08d05dae",
+                "description": "Get a JWT via given credentials.",
+                "operationId": "b648b90b9891b4b73ac9248388fbbc65",
                 "requestBody": {
                     "required": true,
                     "content": {
