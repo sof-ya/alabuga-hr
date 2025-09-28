@@ -1,26 +1,28 @@
 <template>
     <LoginLayOut>
-        <div class="px-4 flex flex-col gap-5">
-            <h1 class=" text-center">Авторизация</h1>
-            <InputComponent
-            name="email"
-            title="Email"
-            placeholder="email@email.ru"
-            required
-            v-model="form.email"
-            type="email"
-            />
-            <InputComponent
-            name="password"
-            title="Пароль"
-            placeholder="*********"
-            type="password"
-            required
-            v-model="form.password"/>
-            <span class="flex flex-row items-center"><span class="star">*</span>- обязательные поля для заполнения</span>
-            <ButtonComponent
-                text="Войти"
-            />
+        <div class="h-full w-full flex items-center justify-center">
+            <div class="px-4 flex flex-col gap-5 w-full">
+                <h1 class=" text-center">Авторизация</h1>
+                <InputComponent
+                name="email"
+                title="Email"
+                placeholder="email@email.ru"
+                required
+                v-model="form.email"
+                type="email"
+                />
+                <InputComponent
+                name="password"
+                title="Пароль"
+                placeholder="*********"
+                type="password"
+                required
+                v-model="form.password"/>
+                <span class="flex flex-row items-center"><span class="star">*</span>- обязательные поля для заполнения</span>
+                <ButtonComponent
+                    text="Войти"
+                />
+            </div>
         </div>
     </LoginLayOut>
 </template>
