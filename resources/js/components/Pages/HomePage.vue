@@ -47,6 +47,10 @@ const links =[
     {
         route:'actionlog',
         name:'логи'
+    },    
+    {
+        route:'registration',
+        name:'регистрация'
     },
 ]
 const callToast =()=>{

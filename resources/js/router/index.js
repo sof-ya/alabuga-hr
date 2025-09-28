@@ -96,6 +96,14 @@ const routes = [
         meta: {
             title: 'Форма входа'
         }
+    },    
+    {
+        path: '/registration',
+        name: 'registration',
+        component: () => import('../components/Pages/RegistrationPage.vue'),
+        meta: {
+            title: 'Регистрация'
+        }
     },
     {
         path: '/:pathMatch(.*)*',
