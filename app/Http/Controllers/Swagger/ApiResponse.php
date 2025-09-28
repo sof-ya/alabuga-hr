@@ -10,7 +10,13 @@ use OpenApi\Attributes as OAT;
             content: new OAT\JsonContent(required: ['message'], properties: [
                 new OAT\Property('message', type: 'string'),
                     ]),
-    ), OAT\Schema(
+    ),
+    OAT\Response(
+            response: 'MessageResponse',
+            description: 'Message',
+            content: new OAT\JsonContent(required: ['message'], properties: [
+                new OAT\Property('message', type: 'string'),
+    ])), OAT\Schema(
             schema: 'ValidationErrors',
             required: ['message', 'errors'],
             properties: [
@@ -47,7 +53,26 @@ use OpenApi\Attributes as OAT;
             response: 'LengthAwarePaginatorResponse',
             description: 'Length aware paginator',
             content: new OAT\JsonContent(ref: '#/components/schemas/LengthAwarePaginator'),
-    ), 
+    ), OAT\Response(
+            response: 'StoreItemResponse',
+            description: 'StoreItem',
+            content: new OAT\JsonContent(required: ['store_item_id'], properties: [
+                new OAT\Property('store_item_id', type: 'integer', minimum: 1),
+                    ]),
+    ), OAT\Response(
+            response: 'ErrorStoreItemResponse',
+            description: 'StoreItem',
+            content: new OAT\JsonContent(required: ['message'], properties: [
+                new OAT\Property('message', type: 'string', example: 'Недостаточно средств для покупки товара'),
+                    ]),
+    ), OAT\Response(
+            response: 'TokenResponse',
+            description: 'JWT',
+            content: new OAT\JsonContent(required: ['access_token', 'token_type', 'expires_in'], properties: [
+                new OAT\Property(property: 'access_token', type: 'string', example: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzU5MDQxMjQ0LCJleHAiOjE3NTkwNDQ4NDQsIm5iZiI6MTc1OTA0MTI0NCwianRpIjoiVkJKR3UyT2lDRmtZdU9qUSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.F7uLmRhRZ71tij1v5u9AGh4ZhwI2vvcWa2iSvvDGW9I'),
+                new OAT\Property(property: 'token_type', type: 'string', example: 'bearer'),
+                new OAT\Property(property: 'expires_in', type: 'integer', example: 3600),
+                ])),
 ]
 final class ApiResponse
 {

@@ -17,7 +17,6 @@ use OpenApi\Attributes as OAT;
         new OAT\Property(property: 'price', type: 'integer', format: 'int4', minimum: 1),
         new OAT\Property(property: 'image', type: 'string', nullable: true, example: 'images/1.jpg'),
         new OAT\Property(property: 'items_count', type: 'integer', format: 'int4', minimum: 1),
-        new OAT\Property(property: 'is_available', type: 'boolean'),
         new OAT\Property(property: 'in_purchases', type: 'boolean'),
         new OAT\Property(property: 'is_active', type: 'boolean'),
 
@@ -38,6 +37,10 @@ class StoreItem extends Model
         'description',
         'image',
         'items_count',
+        'is_available'
+    ];
+
+    protected $hidden = [
         'is_available'
     ];
 

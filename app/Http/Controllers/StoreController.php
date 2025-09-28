@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StoreItemCollection;
 use App\Http\Responses\BaseResponse;
 use App\Models\StoreItem;
 use App\Services\StoreService;
@@ -25,11 +26,17 @@ class StoreController extends Controller
         responses: [new OAT\Response(
             response: JsonResponse::HTTP_OK,
             description: 'Successful response',
-            content: new OAT\JsonContent(type: 'array', items: new OAT\Items('#/components/schemas/StoreItem')))
+            content: new OAT\JsonContent(
+                allOf: [
+                    new OAT\Schema('#/components/schemas/LengthAwarePaginator'),
+                    new OAT\Property('data', '#/components/schemas/StoreItemCollection')
+                ]
+            )),
+            new OAT\Response('#/components/responses/ErrorResponse', JsonResponse::HTTP_UNAUTHORIZED),
         ],
     )]
     
-    public function index(Request $request, StoreService $service) : BaseResponse {
+    public function index(Request $request, StoreService $service) : StoreItemCollection {
         $validated = $request->validate([
             'page' => 'integer',
             'perPage' => 'integer',
@@ -37,7 +44,7 @@ class StoreController extends Controller
             'only_available' => 'boolean',
         ]);
 
-        return new BaseResponse($service->index(...$validated));
+        return new StoreItemCollection($service->index(...$validated));
     }
 
     #[OAT\Patch(
@@ -47,7 +54,10 @@ class StoreController extends Controller
         parameters: [new OAT\Parameter(ref: '#/components/parameters/id')],
         security: [["JWT" => []]],
         responses: [
+            new OAT\Response('#/components/responses/StoreItemResponse', JsonResponse::HTTP_OK),
             new OAT\Response('#/components/responses/ErrorResponse', JsonResponse::HTTP_BAD_REQUEST),
+            new OAT\Response('#/components/responses/ErrorStoreItemResponse', JsonResponse::HTTP_FORBIDDEN),
+            new OAT\Response('#/components/responses/ErrorResponse', JsonResponse::HTTP_UNAUTHORIZED),
             new OAT\Response('#/components/responses/ValidationErrorsResponse', JsonResponse::HTTP_UNPROCESSABLE_ENTITY),
         ],
 

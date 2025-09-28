@@ -40,10 +40,10 @@
                 },
                 "responses": {
                     "200": {
-                        "$ref": ""
+                        "$ref": "#/components/responses/TokenResponse"
                     },
                     "422": {
-                        "$ref": ""
+                        "$ref": "#/components/responses/ValidationErrorsResponse"
                     }
                 }
             }
@@ -56,6 +56,9 @@
                 "description": "Get the authenticated User.",
                 "operationId": "d47167655a419dad14940bf72c84ef82",
                 "responses": {
+                    "401": {
+                        "$ref": "#/components/responses/ErrorResponse"
+                    },
                     "200": {
                         "description": "User",
                         "content": {
@@ -66,7 +69,56 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "description": "Log the user out (Invalidate the token).",
+                "operationId": "3665a6c2792d12459483be92ef04e1d0",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MessageResponse"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/ErrorResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/refresh": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "description": "Refresh a token.",
+                "operationId": "2a73cacaede92ee7d6eb20deed3b9833",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TokenResponse"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/ErrorResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
             }
         },
         "/api/store": {
@@ -96,13 +148,20 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/StoreItem"
-                                    }
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/LengthAwarePaginator"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/StoreItemCollection"
+                                        }
+                                    ]
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/ErrorResponse"
                     }
                 },
                 "security": [
@@ -125,7 +184,16 @@
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/StoreItemResponse"
+                    },
                     "400": {
+                        "$ref": "#/components/responses/ErrorResponse"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ErrorStoreItemResponse"
+                    },
+                    "401": {
                         "$ref": "#/components/responses/ErrorResponse"
                     },
                     "422": {
@@ -253,6 +321,83 @@
                 },
                 "type": "object"
             },
+            "StoreItemCollection": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StoreItemResource"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "StoreItemResource": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/StoreItem"
+                    },
+                    {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "format": "int64",
+                                "minimum": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "maxLength": 255,
+                                "example": "Футболка"
+                            },
+                            "descrirpion": {
+                                "type": "string",
+                                "example": "Классная футболка",
+                                "nullable": true
+                            },
+                            "price": {
+                                "type": "integer",
+                                "format": "int4",
+                                "minimum": 1
+                            },
+                            "image": {
+                                "type": "string",
+                                "example": "images/1.jpg",
+                                "nullable": true
+                            },
+                            "items_count": {
+                                "type": "integer",
+                                "format": "int4",
+                                "minimum": 1
+                            },
+                            "in_purchases": {
+                                "type": "boolean"
+                            },
+                            "is_active": {
+                                "type": "boolean"
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true
+                            },
+                            "deleted_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
             "StoreItem": {
                 "properties": {
                     "id": {
@@ -284,9 +429,6 @@
                         "type": "integer",
                         "format": "int4",
                         "minimum": 1
-                    },
-                    "is_available": {
-                        "type": "boolean"
                     },
                     "in_purchases": {
                         "type": "boolean"
@@ -388,6 +530,24 @@
                     }
                 }
             },
+            "MessageResponse": {
+                "description": "Message",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "message"
+                            ],
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
             "ValidationErrorsResponse": {
                 "description": "Validation errors",
                 "content": {
@@ -404,6 +564,73 @@
                     "application/json": {
                         "schema": {
                             "$ref": "#/components/schemas/LengthAwarePaginator"
+                        }
+                    }
+                }
+            },
+            "StoreItemResponse": {
+                "description": "StoreItem",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "store_item_id"
+                            ],
+                            "properties": {
+                                "store_item_id": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "ErrorStoreItemResponse": {
+                "description": "StoreItem",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "message"
+                            ],
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Недостаточно средств для покупки товара"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "TokenResponse": {
+                "description": "JWT",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "access_token",
+                                "token_type",
+                                "expires_in"
+                            ],
+                            "properties": {
+                                "access_token": {
+                                    "type": "string",
+                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzU5MDQxMjQ0LCJleHAiOjE3NTkwNDQ4NDQsIm5iZiI6MTc1OTA0MTI0NCwianRpIjoiVkJKR3UyT2lDRmtZdU9qUSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.F7uLmRhRZ71tij1v5u9AGh4ZhwI2vvcWa2iSvvDGW9I"
+                                },
+                                "token_type": {
+                                    "type": "string",
+                                    "example": "bearer"
+                                },
+                                "expires_in": {
+                                    "type": "integer",
+                                    "example": 3600
+                                }
+                            },
+                            "type": "object"
                         }
                     }
                 }
