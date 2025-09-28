@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useUserStore } from '../store/UserStore';
+
 
 const routes = [
     {
@@ -6,7 +8,8 @@ const routes = [
         name: 'Home',
         component: () => import('../components/Pages/HomePage.vue'),
         meta: {
-            title: 'Главная'
+            title: 'Главная',
+            requiresAuth: true
         }
     },
     {
@@ -14,7 +17,8 @@ const routes = [
         name: 'About',
         component: () => import('../components/Pages/AboutPage.vue'),
         meta: {
-            title: 'О нас'
+            title: 'О нас',
+            requiresAuth: true
         }
     },
     {
@@ -22,7 +26,8 @@ const routes = [
         name: 'userPage',
         component: () => import('../components/Pages/LkPage.vue'),
         meta: {
-            title: 'userPage'
+            title: 'Личный кабинет',
+            requiresAuth: true
         }
     },
     {
@@ -30,15 +35,17 @@ const routes = [
         name: 'shop',
         component: () => import('../components/Pages/ShopPage.vue'),
         meta: {
-            title: 'shop'
+            title: 'Магазин',
+            requiresAuth: true
         }
     },
     {
         path: '/warehouse',
-        name: 'Хранилище',
+        name: 'warehouse',
         component: () => import('../components/Pages/WarehousePage.vue'),
         meta: {
-            title: 'Хранилище'
+            title: 'Хранилище',
+            requiresAuth: true
         }
     },
     {
@@ -46,7 +53,8 @@ const routes = [
         name: 'Competencies',
         component: () => import('../components/Pages/CompetenciesPage.vue'),
         meta: {
-            title: 'Компетенции'
+            title: 'Компетенции',
+            requiresAuth: true
         }
     },
     {
@@ -54,7 +62,8 @@ const routes = [
         name: 'Missions',
         component: () => import('../components/Pages/MissionsPage.vue'),
         meta: {
-            title: 'Миссии'
+            title: 'Миссии',
+            requiresAuth: true
         }
     },
     {
@@ -62,7 +71,8 @@ const routes = [
         name: 'raiting',
         component: () => import('../components/Pages/RaitingPage.vue'),
         meta: {
-            title: 'Рейтинг'
+            title: 'Рейтинг',
+            requiresAuth: true
         }
     },
     {
@@ -70,31 +80,52 @@ const routes = [
         name: 'actionlog',
         component: () => import('../components/Pages/LogPage.vue'),
         meta: {
-            title: 'Журнал действия'
+            title: 'Журнал действий',
+            requiresAuth: true
         }
-    },       
+    },
     {
         path: '/notifications',
         name: 'notifications',
         component: () => import('../components/Pages/NotificationPage.vue'),
         meta: {
-            title: 'Журнал действия'
+            title: 'Уведомления',
+            requiresAuth: true
         }
-    },  
+    },
     {
         path: '/artifacts',
         name: 'artifacts',
         component: () => import('../components/Pages/ArtifactsPage.vue'),
         meta: {
-            title: 'Журнал действия'
+            title: 'Артефакты',
+            requiresAuth: true
         }
-    },      
+    },
     {
         path: '/login',
-        name: 'log',
+        name: 'login',
         component: () => import('../components/Pages/LoginPage.vue'),
         meta: {
-            title: 'Форма входа'
+            title: 'Форма входа',
+            requiresGuest: true 
+        }
+    },
+    {
+        path: '/registration',
+        name: 'registration',
+        component: () => import('../components/Pages/RegistrationPage.vue'),
+        meta: {
+            title: 'Регистрация',
+            requiresGuest: true
+        }
+    },
+    {
+        path: '/divorce',
+        name: 'divorce',
+        component: () => import('../components/Pages/DevorcePage.vue'),
+        meta: {
+            title: 'Разводная страница'
         }
     },
     {
@@ -115,10 +146,23 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    const userStore = useUserStore()
+    const isAuthenticated = userStore.isAuthenticated
     if (to.meta.title) {
-        document.title = `${to.meta.title} | Laravel + Vue 3`;
+        document.title = `${to.meta.title} | Laravel + Vue 3`
     }
-    next();
-});
 
-export default router;
+    if (to.meta.requiresAuth && !isAuthenticated) {
+        next('/divorce')
+        return
+    }
+
+    if (to.meta.requiresGuest && isAuthenticated) {
+        next('/')
+        return
+    }
+
+    next()
+})
+
+export default router

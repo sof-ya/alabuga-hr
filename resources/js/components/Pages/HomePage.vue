@@ -39,14 +39,22 @@ const links =[
     {
         route:'login',
         name:'loginPage'
-    },    
+    },
     {
         route:'notifications',
         name:'notifications'
-    },    
+    },
     {
         route:'actionlog',
         name:'логи'
+    },
+    {
+        route:'registration',
+        name:'регистрация'
+    },
+        {
+        route:'divorce',
+        name:'Разводная страница'
     },
 ]
 const callToast =()=>{
