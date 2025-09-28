@@ -3,7 +3,7 @@ import { Transition, watch } from 'vue';
 import { useSiteState } from '../../store/SiteState';
 
 const store = useSiteState()
-if(showToastLength){
+
   watch(() => store.sucsesMessage, (newMessage) => {
   if (newMessage) {
     setTimeout(() => {
@@ -11,7 +11,7 @@ if(showToastLength){
     }, 3000);
   }
 });
-}
+
 
 </script>
 <template>
