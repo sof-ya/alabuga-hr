@@ -2,8 +2,6 @@
 import FooterComponent from '../general/FooterComponent.vue';
 import HeaderComponent from '../general/HeaderComponent.vue';
 
-import FooterComponent from '../general/FooterComponent.vue';
-import HeaderComponent from '../general/HeaderComponent.vue';
 
 
 
