@@ -72,7 +72,7 @@ const routes = [
         meta: {
             title: 'Журнал действия'
         }
-    },       
+    },
     {
         path: '/notifications',
         name: 'notifications',
@@ -80,7 +80,7 @@ const routes = [
         meta: {
             title: 'Журнал действия'
         }
-    },  
+    },
     {
         path: '/artifacts',
         name: 'artifacts',
@@ -88,21 +88,29 @@ const routes = [
         meta: {
             title: 'Журнал действия'
         }
-    },      
+    },
     {
         path: '/login',
-        name: 'log',
+        name: 'login',
         component: () => import('../components/Pages/LoginPage.vue'),
         meta: {
             title: 'Форма входа'
         }
-    },    
+    },
     {
         path: '/registration',
         name: 'registration',
         component: () => import('../components/Pages/RegistrationPage.vue'),
         meta: {
             title: 'Регистрация'
+        }
+    },
+    {
+        path: '/divorce',
+        name: 'divorce',
+        component: () => import('../components/Pages/DevorcePage.vue'),
+        meta: {
+            title: 'Страница не найдена'
         }
     },
     {
