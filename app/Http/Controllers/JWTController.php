@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OAT;
 
@@ -30,9 +30,9 @@ class JWTController extends Controller
                                 ]),
                 ),
                 tags: ['auth'],
-                responses: [
-                    new OAT\Response('', JsonResponse::HTTP_OK),
-                    new OAT\Response('', JsonResponse::HTTP_UNPROCESSABLE_ENTITY),
+                responses: [                    
+                    new OAT\Response('#/components/responses/TokenResponse', JsonResponse::HTTP_OK),
+                    new OAT\Response('#/components/responses/ValidationErrorsResponse', JsonResponse::HTTP_UNPROCESSABLE_ENTITY),
                 ],
         )]
 
@@ -40,28 +40,39 @@ class JWTController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials, ['exp' => Carbon\Carbon::now()->addDays(7)->timestamp])) {
+        if (! $token = auth()->attempt($credentials, ['exp' => Carbon::now()->addDays(7)->timestamp])) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         return $this->respondWithToken($token);
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    #[OAT\Post(
+            path: '/api/auth/me',
+            description: 'Get the authenticated User.',
+            tags: ['auth'],
+            security: [["JWT" => []]],
+            responses: [
+                new OAT\Response('#/components/responses/ErrorResponse', JsonResponse::HTTP_UNAUTHORIZED),
+                new OAT\Response(response: JsonResponse::HTTP_OK, description: 'User', content: new OAT\JsonContent(ref: '#/components/schemas/User')),
+            ],
+        )]
     public function me()
     {
         return response()->json(auth()->user());
     }
 
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    #[OAT\Post(
+        path: '/api/auth/logout',
+        description: 'Log the user out (Invalidate the token).',
+        tags: ['auth'],
+        security: [["JWT" => []]],
+        responses: [
+            new OAT\Response('#/components/responses/MessageResponse', JsonResponse::HTTP_OK),
+            new OAT\Response('#/components/responses/ErrorResponse', JsonResponse::HTTP_UNAUTHORIZED),
+            ],
+        )]
+
     public function logout()
     {
         auth()->logout();
@@ -69,11 +80,16 @@ class JWTController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    #[OAT\Post(
+            path: '/api/auth/refresh',
+            description: 'Refresh a token.',
+            tags: ['auth'],
+            security: [["JWT" => []]],
+            responses: [
+                new OAT\Response('#/components/responses/TokenResponse', JsonResponse::HTTP_OK),
+                new OAT\Response('#/components/responses/ErrorResponse', JsonResponse::HTTP_UNAUTHORIZED),
+            ],
+    )]
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh());

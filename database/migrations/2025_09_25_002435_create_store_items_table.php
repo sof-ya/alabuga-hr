@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('is_available')->comment('Флаг доступности товаров');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

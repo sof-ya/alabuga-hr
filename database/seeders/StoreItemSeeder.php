@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\StoreItem;
 use Illuminate\Database\Seeder;
 
 class StoreItemSeeder extends Seeder
@@ -12,6 +12,6 @@ class StoreItemSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        StoreItem::factory(10)->create();
     }
 }
