@@ -17,7 +17,11 @@ class StoreItemFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->title(),
+            'description' => fake()->text(),
+            'price' => fake()->numberBetween(0, 100),
+            'items_count' => fake()->numberBetween(0, 100),
+            'is_available' => true
         ];
     }
 }
