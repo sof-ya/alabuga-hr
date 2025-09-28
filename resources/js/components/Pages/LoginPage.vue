@@ -109,14 +109,13 @@ const handleLogin = async () => {
         if (!response.ok) {
             throw new Error(data.message || `HTTP error! status: ${response.status}`)
         }
-
         // Успешный ответ
         const { user, token } = data
 
         // Сохраняем данные в Pinia store
         userStore.setUser(user)
-        userStore.setToken(token)
-
+        userStore.setToken(data.access_token)
+        // console.log(token)
         // Перенаправляем на главную страницу
         await router.push('/')
 
