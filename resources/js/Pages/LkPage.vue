@@ -8,8 +8,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import LkLayout from '../Layout/LkLayout.vue';
-import { useUserStore } from '../../store/UserStore';
+import LkLayout from '../components/Layout/LkLayout.vue';
+import { useUserStore } from '../store/UserStore';
 import { useRouter } from 'vue-router';
 const loading = ref(false)
 const userStore = useUserStore()

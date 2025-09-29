@@ -23,11 +23,11 @@
 
 <script setup>
 import { computed, onMounted } from 'vue';
-import { useUserStore } from '../../store/UserStore';
-import MainLayout from '../Layout/MainLayout.vue';
-import IconComponent from '../ui/IconComponent.vue';
-import ButtonComponent from '../ui/ButtonComponent.vue';
-import ButtonComponentWhite from '../ui/ButtonComponentWhite.vue';
+import { useUserStore } from '../store/UserStore';
+import MainLayout from '../components/Layout/MainLayout.vue';
+import IconComponent from '../components/ui/IconComponent.vue';
+import ButtonComponent from '../components/ui/ButtonComponent.vue';
+import ButtonComponentWhite from '../components/ui/ButtonComponentWhite.vue';
 const userStore = useUserStore()
 
 const userData = computed(()=>{

@@ -1,13 +1,11 @@
 <template>
     <MainLayout>
-        страница CompetenciesPage.vuee
+        страница ArtifactsPage.vue
     </MainLayout>
 </template>
 
 <script setup>
-import MainLayout from '../Layout/MainLayout.vue';
-
-
+import MainLayout from '../components/Layout/MainLayout.vue';
 
 </script>
 
