@@ -4,16 +4,46 @@
             <h2><IconComponent
                 name="money"/> На счету : {{ userData["gold"] }} лаккоинов</h2>
                 <div class="grid grid-cols-2 gap-2.5">
-                    <button>магазин</button> <button>Хранилище</button>
-                    <ButtonComponent
+                    <ButtonWithTwoStates
                     text="Магазин"
+                    :state="tabState"
+                    @click="toggleTabState"
                     />
-                    <ButtonComponentWhite
-                    text="Хранилище"/>
+                    <ButtonWithTwoStates
+                    text="Хранилище"
+                    :state="!tabState"
+                    @click="toggleTabState"
+                    />
                 </div>
-                <div class="grid grid-cols-2">
-                    <div class="">item1</div>
-                    <div class="">item1</div>
+                <div v-if="tabState"
+                class="grid grid-cols-2 gap-2.5">
+                    <ItemComponent
+                    />
+                    <ItemComponent
+                    />
+                    <ItemComponent
+                    />
+                    <ItemComponent
+                    />
+                    <ItemComponent
+                    />
+                      <ItemComponent
+                    />
+                    <ItemComponent
+                    />
+                    <ItemComponent
+                    />
+                    <ItemComponent
+                    />
+                    <ItemComponent
+                    />
+                </div>
+                <div v-else
+                class="grid grid-cols-2 gap-2.5">
+                    <ItemComponent
+                    />
+                    <ItemComponent
+                    />
                 </div>
         </div>
    
@@ -22,20 +52,25 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useUserStore } from '../store/UserStore';
 import MainLayout from '../components/Layout/MainLayout.vue';
 import IconComponent from '../components/ui/IconComponent.vue';
-import ButtonComponent from '../components/ui/ButtonComponent.vue';
-import ButtonComponentWhite from '../components/ui/ButtonComponentWhite.vue';
-const userStore = useUserStore()
+import ItemComponent from '../components/pages/shopPage/ItemComponent.vue';
+import ButtonWithTwoStates from '../components/ui/ButtonWithTwoStates.vue';
 
+
+const userStore = useUserStore()
+const tabState = ref(false)
 const userData = computed(()=>{
     return userStore.user || {}
 })
 onMounted(async () => {
     await userStore.fetchUser()
 })
+const toggleTabState =()=>{
+    tabState.value=!tabState.value
+}
 </script>
 
 <style  scoped>
