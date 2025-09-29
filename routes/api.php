@@ -12,6 +12,7 @@ Route::as('api.')->group(function () {
 
         Route::apiResource('branches', BranchController::class)->only(['index']);
         Route::get('branches/requirements/{branch}', [BranchController::class, 'requirements']);
+        Route::get('branches/{branch}/missions', [BranchController::class, 'missionsList']);
     });
 });
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BranchCollection;
-use App\Http\Resources\BranchRequirementsCollection;
+use App\Http\Resources\MissionCollection;
 use App\Http\Responses\BaseResponse;
 use App\Models\Branch;
 use App\Services\BranchService;
@@ -59,5 +59,9 @@ class BranchController extends Controller
 
     public function requirements(Branch $branch, BranchService $service) : BaseResponse {
         return new BaseResponse($service->requirements($branch), JsonResponse::HTTP_OK);
+    }
+
+    public function missionsList(Branch $branch) : MissionCollection {
+        return new MissionCollection($branch->missions()->get());
     }
 }
