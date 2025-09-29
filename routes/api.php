@@ -11,6 +11,7 @@ Route::as('api.')->group(function () {
         Route::patch('/store/buy/{item}', [StoreController::class, 'buy']);
 
         Route::apiResource('branches', BranchController::class)->only(['index']);
+        Route::get('branches/requirements/{branch}', [BranchController::class, 'requirements']);
     });
 });
 

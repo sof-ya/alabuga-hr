@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BranchCollection;
+use App\Http\Resources\BranchRequirementsCollection;
+use App\Http\Responses\BaseResponse;
 use App\Models\Branch;
 use App\Services\BranchService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
@@ -52,5 +55,9 @@ class BranchController extends Controller
     public function destroy(Branch $branch)
     {
         //
+    }
+
+    public function requirements(Branch $branch, BranchService $service) : BaseResponse {
+        return new BaseResponse($service->requirements($branch), JsonResponse::HTTP_OK);
     }
 }
