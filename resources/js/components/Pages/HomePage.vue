@@ -1,6 +1,6 @@
 <template>
     <LkLayout>
-        <div class="">
+        <div class="" v-if="userStore.user">
             <div class="header">
                 <div class="userPhoto">
                     <img 
@@ -10,7 +10,7 @@
                         >
                 </div>
                 <div class="userInfo">
-                    <h2 class="userName">{{ userData["name"] }}</h2>
+                    <h2 class="userName">{{ userDataname }}</h2>
                     <div class="userInfoItems">
                         <div class="userLevel">
                             1 Уровень
@@ -50,7 +50,7 @@
                 </div>
 
                 
-            </div>
+            </div> 
 
             <div class="userObjects__wrapper">
                 <div class="userObjects">
@@ -66,12 +66,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
 
         </div>
-                                <button
+        <button
             @click="callToast"
-            class="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+            class="bg-blue-500 text-white px-4 py-2 rounded mt-4 h-10"
         >
             CallToast
         </button>

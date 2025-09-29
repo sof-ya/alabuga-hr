@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-
+import { useSiteState } from './SiteState'
 export const useUserStore = defineStore('user', () => {
   const user = ref(null)
   const token = ref(localStorage.getItem('auth_token'))
-  const isLoading = ref(false)
+  const siteState = useSiteState()
 
   const isAuthenticated = computed(() => {
     if (!token.value) return false
@@ -49,7 +49,7 @@ export const useUserStore = defineStore('user', () => {
       return null
     }
 
-    isLoading.value = true
+    siteState.loadingTrue()
 
     try {
       const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
@@ -96,7 +96,7 @@ export const useUserStore = defineStore('user', () => {
       
       return null
     } finally {
-      isLoading.value = false
+      siteState.loadingFalse()
     }
   }
 
@@ -104,7 +104,6 @@ export const useUserStore = defineStore('user', () => {
   return {
     user,
     token,
-    isLoading,
     isAuthenticated,
     setUser,
     setToken,
