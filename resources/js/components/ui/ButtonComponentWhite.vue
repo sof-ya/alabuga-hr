@@ -41,14 +41,15 @@ const handleClick = (event) => {
         font-family: var(--font-family);
         font-weight: 700;
         font-size: 16px;
-        color: var(--white-500);
+        color: var(--blue-500);
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
+        background: var(--white-50);
     }
     .active{
-        background: var(--blue-500);
+        background: var(--white-50);
     }
     .disabled{
         background: var(--white-300);
