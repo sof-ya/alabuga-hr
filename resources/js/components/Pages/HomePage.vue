@@ -10,7 +10,7 @@
                         >
                 </div>
                 <div class="userInfo">
-                    <h2 class="userName">{{ userName }}</h2>
+                    <h2 class="userName">{{ userData["name"] }}</h2>
                     <div class="userInfoItems">
                         <div class="userLevel">
                             1 Уровень
@@ -31,12 +31,13 @@
                                     </clipPath>
                                 </defs>
                                 </svg>
-                            Новичок
+                            {{ userData["rank"]["name"] }}
                         </div>
                         <div class="userPlace">
                             1 место
                         </div>
                     </div>
+                    
                     <hr class="row">
                     <div class="userCompetention">
                         <h3>Компетенции</h3>
@@ -127,6 +128,9 @@ const callToast = () => {
 
 const userName = computed(() => {
     return userStore.user?.name || 'Загрузка...'
+})
+const userData = computed(() => {
+    return userStore.user || {}
 })
 
 const imgPhoto = computed(() => {
