@@ -8,7 +8,7 @@ import LkHeaderComponent from '../general/LkHeaderComponent.vue';
 </script>
 <template>
 
-    <div class=" grid grid-rows-[50px_1fr_68px] h-screen">
+    <div class=" grid grid-rows-[50px_1fr_68px] h-screen overflow-auto">
         <LkHeaderComponent/>
             <slot></slot>
         <FooterComponent/>

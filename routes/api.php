@@ -15,5 +15,5 @@ Route::prefix('auth')->controller(JWTController::class)->group(function () {
     Route::post('/login', 'login')->name('login');
     Route::post('/logout', 'logout')->name('logout');
     Route::post('/refresh', 'refresh')->name('refresh');
-    Route::post('/me', 'me')->name('me');
+    Route::get('/me', 'me')->name('me');
 });

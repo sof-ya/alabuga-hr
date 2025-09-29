@@ -1,5 +1,5 @@
 <template>
-    <div class=" grid grid-cols-6 footer">
+    <div class=" grid grid-cols-6 footer sticky bottom-0">
         <NavigationItem
         v-for="item in navigationItems"
         :key="item.name"
