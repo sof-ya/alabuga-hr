@@ -61,8 +61,7 @@ class User extends Authenticatable implements JWTSubject
 
     protected $with = [
         'role',
-        'rank',
-        'missions'
+        'rank'
     ];
 
 
@@ -118,5 +117,10 @@ class User extends Authenticatable implements JWTSubject
     public function storeItems() : BelongsToMany
     {
         return $this->belongsToMany(StoreItem::class, 'user_purchases');
+    }
+
+    public function branches() : BelongsToMany
+    {
+        return $this->belongsToMany(Branch::class, 'user_branches');
     }
 }

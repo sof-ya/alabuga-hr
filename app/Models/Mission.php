@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,6 +33,11 @@ class Mission extends Model
         'role'
     ];
 
+    protected $appends = [
+        'status',
+        'result'
+    ];
+
     public function missionCategory() : BelongsTo {
         return $this->belongsTo(MissionCategory::class);
     }
@@ -44,8 +50,29 @@ class Mission extends Model
         return $this->belongsTo(Rank::class);
     }
 
-    public function users() : BelongsToMany
+    public function users()
     {
-        return $this->belongsToMany(User::class, 'user_missions');
+        return $this->belongsToMany(User::class, 'user_missions')
+                    ->withPivot('status_mission', 'result');
+    }
+
+    protected function status(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $user = $this->users()->where('users.id', auth()->user()->id)->first();
+                return $user ? $user->pivot->status_mission : null;
+            }
+        );
+    }
+
+    protected function result(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $user = $this->users->first();
+                return $user ? $user->pivot->result : null;
+            }
+        );
     }
 }
