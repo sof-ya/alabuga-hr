@@ -45,7 +45,7 @@ class Branch extends Model
                     ->select([
                         DB::raw("COUNT(*) as total_count"),
                         DB::raw("SUM(CASE WHEN um.status_mission  = 'Завершено' THEN 1 ELSE 0 END) as finished"),
-                        DB::raw("ROUND((SUM(CASE WHEN um.status_mission  = 'Завершено' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 0) as finished_percent")
+                        DB::raw("CAST(ROUND((SUM(CASE WHEN um.status_mission  = 'Завершено' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 0) AS INTEGER) as finished_percent")
                     ])
                     ->groupBy('b.id', 'b.name')->where('b.id', $this->id)->first();
             }

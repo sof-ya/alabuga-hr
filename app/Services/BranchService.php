@@ -5,15 +5,29 @@ namespace App\Services;
 use App\Models\Branch;
 use App\Models\Mission;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class BranchService
 {
-    public function index(?int $page = null, ?int $perPage = null) : LengthAwarePaginator {
-        $builder = auth()->user()->branches()->orderBy('priority_rank');
+    public function index(?int $page = null, ?int $perPage = null, ?bool $onlyCompleted = null) : LengthAwarePaginator {
+        $paginator = auth()->user()->branches()
+        ->paginate(perPage: $perPage, page: $page);
 
-        return $builder->paginate(perPage: $perPage, page: $page);
+
+        $filteredCollection = $paginator->getCollection()->filter(function($branch) use ($onlyCompleted) {
+            if ($onlyCompleted === true) {
+                return $branch?->progress?->finished_percent == 100;
+            } elseif ($onlyCompleted === false) {
+                return $branch?->progress?->finished_percent < 100;
+            }
+            return true;
+        });
+
+        $paginator->setCollection($filteredCollection);
+
+        return $paginator;
     }
 
     public function requirements(Branch $branch) : array {

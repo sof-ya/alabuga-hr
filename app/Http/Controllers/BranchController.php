@@ -19,7 +19,8 @@ class BranchController extends Controller
         $validated = $request->validate([
             'page' => 'integer',
             'perPage' => 'integer',
-            'perPage' => 'integer'
+            'perPage' => 'integer',
+            'onlyCompleted' => 'boolean'
         ]);
 
         return new BranchCollection($service->index(...$validated));
