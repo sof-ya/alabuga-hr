@@ -40,7 +40,7 @@
                     :item="item"
                     :is-shop="true"
                     @purchase="handlePurchase"
-                    @open-popup="showDetail(item.id)"
+                    @open-popup="showDetail(item.id, 'shop')"
                 /> 
                 
                 <div v-if="shopStore.shopItems.length === 0" class="col-span-2 text-center py-8 text-gray-500">
@@ -62,7 +62,7 @@
                     :key="item.id"
                     :item="item"
                     context="inventory"
-                    @open-popup="showDetail(item.id)"
+                    @open-popup="showDetail(item.id, 'inventory')"
                 />
 
                 <div v-if="shopStore.userInventory.data.length === 0" class="col-span-2 text-center py-8 text-gray-500">
@@ -81,13 +81,13 @@
         v-if="popUpSate"
         @close-popup="popUpSate=false">
             <div class="">
-                <h3 class="popup__title">Название предмета</h3>
-                <p class="popup__desc">Описание</p>
+                <h3 class="popup__title">{{ elemToShowInPopup.name }}</h3>
+                <p v-if="elemToShowInPopup.description" class="popup__desc">{{ elemToShowInPopup.description }}</p>
                 <div class="popup__img">
                         <img 
-                            v-if="false" 
-                            src="" 
-                            alt=""
+                            v-if="elemToShowInPopup.image" 
+                            :src="elemToShowInPopup.image" 
+                            :alt="elemToShowInPopup.name"
                             class="image__img"
                         >
                         <div v-else class="flex items-center justify-center h-full w-full">
@@ -95,8 +95,8 @@
                         </div>
                 </div>
                 <div class="popup__footer">
-                    <span class="popup__cost">Стоимость: 1000 лаккоинов</span>
-                    <button class="popup__button">Купить артефакт</button>
+                    <span class="popup__cost">Стоимость: {{ elemToShowInPopup.price }} лаккоинов</span>
+                    <button class="popup__button">Купить артефакт {{ elemToShowInPopup.id }}</button>
                 </div>
             </div>
 
@@ -122,6 +122,7 @@ const shopStore = useShopStore()
 const siteState = useSiteState()
 const popUpSate = ref(false)
 const activeTab = ref('shop')
+const elemToShowInPopup = ref([])
 const userData = computed(() => {
     return userStore.user || {}
 })
@@ -162,8 +163,14 @@ onMounted(async () => {
     await userStore.fetchUser()
     await loadShopData()
 })
-const showDetail=(id)=>{
-    console.log(id)
+const showDetail=(id, type)=>{
+    console.log(type)
+    if(type === 'shop'){
+        elemToShowInPopup.value = shopStore.shopItems.data.find(item=>item.id == id)
+    }else if(type === 'inventory'){
+         elemToShowInPopup.value = shopStore.userInventory.data.find(item=>item.id == id)
+    }
+
     popUpSate.value=true
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="item">
-        <div class="image" @click="emit('openPopup')">
+        <div class="image cursor-pointer" @click="emit('openPopup')">
             <img 
                 v-if="item.image" 
                 :src="item.image" 
@@ -11,7 +11,7 @@
                 Нет изображения
             </div>
         </div>
-        <h3>{{ item.name }}</h3>
+        <h3  @click="emit('openPopup')" class="cursor-pointer">{{ item.name }}</h3>
         <div class="grid grid-cols-2 items-center">
             <span class="cost">{{ formattedPrice }} лаккоинов</span>
             <button 
