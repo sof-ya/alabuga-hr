@@ -40,6 +40,7 @@
                     :item="item"
                     :is-shop="true"
                     @purchase="handlePurchase"
+                    @open-popup="showDetail(item.id)"
                 /> 
                 
                 <div v-if="shopStore.shopItems.length === 0" class="col-span-2 text-center py-8 text-gray-500">
@@ -61,6 +62,7 @@
                     :key="item.id"
                     :item="item"
                     context="inventory"
+                    @open-popup="showDetail(item.id)"
                 />
 
                 <div v-if="shopStore.userInventory.data.length === 0" class="col-span-2 text-center py-8 text-gray-500">
@@ -74,6 +76,32 @@
                 </div> 
             </div>
         </div>
+        
+        <PopUpDownLayout
+        v-if="popUpSate"
+        @close-popup="popUpSate=false">
+            <div class="">
+                <h3 class="popup__title">Название предмета</h3>
+                <p class="popup__desc">Описание</p>
+                <div class="popup__img">
+                        <img 
+                            v-if="false" 
+                            src="" 
+                            alt=""
+                            class="image__img"
+                        >
+                        <div v-else class="flex items-center justify-center h-full w-full">
+                            Нет изображения
+                        </div>
+                </div>
+                <div class="popup__footer">
+                    <span class="popup__cost">Стоимость: 1000 лаккоинов</span>
+                    <button class="popup__button">Купить артефакт</button>
+                </div>
+            </div>
+
+        </PopUpDownLayout>
+
     </MainLayout>
 </template>
 
@@ -86,12 +114,13 @@ import IconComponent from '../components/ui/IconComponent.vue';
 import ItemComponent from '../components/pages/shopPage/ItemComponent.vue';
 import ButtonWithTwoStates from '../components/ui/ButtonWithTwoStates.vue';
 import { useShopStore } from '../store/ShopStore';
+import PopUpDownLayout from '../components/Layout/PopUpDownLayout.vue'
 
 
 const userStore = useUserStore()
 const shopStore = useShopStore()
 const siteState = useSiteState()
-const tabState = ref(true)
+const popUpSate = ref(false)
 const activeTab = ref('shop')
 const userData = computed(() => {
     return userStore.user || {}
@@ -133,6 +162,10 @@ onMounted(async () => {
     await userStore.fetchUser()
     await loadShopData()
 })
+const showDetail=(id)=>{
+    console.log(id)
+    popUpSate.value=true
+}
 </script>
 
 <style scoped>
@@ -145,5 +178,52 @@ h2 {
     flex-direction: row;
     gap: 4px;
     align-items: center;
+}
+.popup__title{
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--white-950);
+}
+.popup__desc{
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--white-600);
+}
+.popup__cost{
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--blue-500);
+}
+.popup__img{
+    width: full;
+    aspect-ratio: 2/1;
+        background: #d9d9d9;
+    border-radius: 8px;
+    overflow: hidden;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+}
+.popup__footer{
+    display: grid;
+    grid-template-columns: 1fr 170px;
+    gap:20px ;
+    align-items: center;
+
+}
+.popup__button{
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--white-500);
+    background: var(--blue-500);
+    border-radius: 1000px;
+    padding: 12px 0;
 }
 </style>

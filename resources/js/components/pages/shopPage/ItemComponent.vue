@@ -1,6 +1,6 @@
 <template>
     <div class="item">
-        <div class="image">
+        <div class="image" @click="emit('openPopup')">
             <img 
                 v-if="item.image" 
                 :src="item.image" 
@@ -12,7 +12,6 @@
             </div>
         </div>
         <h3>{{ item.name }}</h3>
-        <p v-if="item.description" class="description">{{ item.description }}</p>
         <div class="grid grid-cols-2 items-center">
             <span class="cost">{{ formattedPrice }} лаккоинов</span>
             <button 
@@ -59,7 +58,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['purchase'])
+const emit = defineEmits(['purchase','openPopup'])
 
 const formattedPrice = computed(() => {
     return new Intl.NumberFormat('ru-RU').format(props.item.price)
