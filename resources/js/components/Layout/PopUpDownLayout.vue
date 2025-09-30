@@ -1,6 +1,6 @@
 <template>
-    <div class="wrapper">
-        <div class="content">
+    <div class="wrapper" @click="handleBackdropClick">
+        <div class="content" @click.stop>
             <button
             @click="closePopup"
              class="close">
@@ -18,6 +18,11 @@ const emit = defineEmits('closePopup')
 const closePopup =()=>{
     emit('closePopup')
 }
+const handleBackdropClick = (event) => {
+    if (event.target.classList.contains('wrapper')) {
+        closePopup();
+    }
+};
 
 </script>
 
