@@ -12,7 +12,7 @@ class RatingService
     public function getUsersRating(int $roleId, int $rankId): array
     {
         $users = User::orderBy('experience', 'desc')->where('role_id', $roleId)->where('rank_id', $rankId)
-            ->get(['name', 'nikname', 'experience', 'role_id', 'rank_id']);
+            ->take(10)->get(['name', 'nikname', 'experience', 'role_id', 'rank_id']);
 
 
         return [

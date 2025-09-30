@@ -55,7 +55,7 @@ class MissionController extends Controller
         path: "/api/missions/{mission}/result",
         summary: "Добавить результат выполнения миссии пользователем",
         description: "Позволяет пользователю добавить результат выполнения миссии (файл или текст)",
-        tags: ["Missions"],
+        tags: ["missions"],
         parameters: [
             new OAT\Parameter(
                 name: "mission",
