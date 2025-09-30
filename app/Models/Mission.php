@@ -6,10 +6,32 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use OpenApi\Attributes as OAT;
 
+#[OAT\Schema(
+    schema: "Mission",
+    description: "Модель задания/миссии",
+    required: ["name", "mission_category_id", "requirement_role_id", "requirement_rank_id", "requirement_experience", "reward_experience", "reward_gold"],
+    properties: [
+        new OAT\Property(property: "id", type: "integer", format: "int64", description: "ID миссии", example: 1),
+        new OAT\Property(property: "name", type: "string", description: "Название миссии", example: "Первое задание"),
+        new OAT\Property(property: "description", type: "string", nullable: true, description: "Описание миссии", example: "Выполните первое задание для получения опыта"),
+        new OAT\Property(property: "image_url", type: "string", nullable: true, description: "Иконка миссии", example: "missions/first.png"),
+        new OAT\Property(property: "completion_deadline", type: "string", format: "date-time", nullable: true, description: "Дедлайн выполнения миссии"),
+        new OAT\Property(property: "mission_category_id", type: "integer", format: "int64", description: "ID типа миссии", example: 1),
+        new OAT\Property(property: "requirement_role_id", type: "integer", format: "int64", description: "ID необходимой роли", example: 1),
+        new OAT\Property(property: "requirement_rank_id", type: "integer", format: "int64", description: "ID необходимого ранга", example: 1),
+        new OAT\Property(property: "requirement_experience", type: "integer", description: "Необходимое значение опыта", example: 500),
+        new OAT\Property(property: "is_visible", type: "boolean", description: "Флаг видимости миссии", example: true),
+        new OAT\Property(property: "is_active", type: "boolean", description: "Флаг активности миссии", example: true),
+        new OAT\Property(property: "is_requirement_text", type: "boolean", description: "Обязательность описания результата", example: false),
+        new OAT\Property(property: "is_requirement_file", type: "boolean", description: "Обязательность прикрепления файла", example: true),
+        new OAT\Property(property: "reward_experience", type: "integer", description: "Опыт за завершение", example: 100),
+        new OAT\Property(property: "reward_gold", type: "integer", description: "Золото за завершение", example: 50),
+        new OAT\Property(property: "created_at", type: "string", format: "date-time", description: "Дата создания"),
+        new OAT\Property(property: "updated_at", type: "string", format: "date-time", description: "Дата обновления"),
+    ]
+)]
 class Mission extends Model
 {
     use HasFactory;
