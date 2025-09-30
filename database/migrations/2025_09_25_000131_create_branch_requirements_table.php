@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('branch_requirements', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('branch_id')->comment('Идентификатор ветки');
+            $table->unsignedBigInteger('branch_id')->comment('Идентификатор ветки');
             $table->foreign('branch_id')->references('id')->on('branches')->index('branch_id')->onDelete('cascade');
 
-            $table->unsignedInteger('branch_requirement_id')->nullable()->comment('Выполненная ветка миссий, которая требуется для активации ветки');
+            $table->unsignedBigInteger('branch_requirement_id')->nullable()->comment('Выполненная ветка миссий, которая требуется для активации ветки');
             $table->foreign('branch_requirement_id')->references('id')->on('branches')->index('branch_requirement_id')->onDelete('cascade');
 
-            $table->unsignedInteger('mission_requirement_id')->nullable()->comment('Выполненная миссия, которая требуется для активации ветки');
+            $table->unsignedBigInteger('mission_requirement_id')->nullable()->comment('Выполненная миссия, которая требуется для активации ветки');
             $table->foreign('mission_requirement_id')->references('id')->on('missions')->index('mission_requirement_id')->onDelete('cascade');
 
             $table->timestamps();

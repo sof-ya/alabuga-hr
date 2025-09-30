@@ -18,13 +18,13 @@ return new class extends Migration
             $table->text('image_url')->nullable()->comment('Иконка миссии');
             $table->timestamp('completion_deadline')->nullable()->comment('Дедлайн выполнения миссии');
 
-            $table->unsignedInteger('mission_category_id')->comment('Идентификатор типа миссии');
+            $table->unsignedBigInteger('mission_category_id')->comment('Идентификатор типа миссии');
             $table->foreign('mission_category_id')->references('id')->on('mission_categories')->index('mission_category_id')->onDelete('cascade');
 
-            $table->unsignedInteger('requirement_role_id')->comment('Необходимая роль');
+            $table->unsignedBigInteger('requirement_role_id')->comment('Необходимая роль');
             $table->foreign('requirement_role_id')->references('id')->on('roles')->index('requirement_role_id')->onDelete('cascade');
 
-            $table->unsignedInteger('requirement_rank_id')->comment('Необходимый ранг');
+            $table->unsignedBigInteger('requirement_rank_id')->comment('Необходимый ранг');
             $table->foreign('requirement_rank_id')->references('id')->on('ranks')->index('requirement_rank_id')->onDelete('cascade');
 
             $table->integer('requirement_experience')->comment('Необходимое значение опыта');

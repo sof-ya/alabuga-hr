@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('user_purchases', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('user_id')->comment('Идентификатор пользователя, совершившего покупку');
+            $table->unsignedBigInteger('user_id')->comment('Идентификатор пользователя, совершившего покупку');
             $table->foreign('user_id')->references('id')->on('users')->index('user_id')->onDelete('cascade');
 
-            $table->unsignedInteger('store_item_id')->comment('Идентификатор купленного товара');
+            $table->unsignedBigInteger('store_item_id')->comment('Идентификатор купленного товара');
             $table->foreign('store_item_id')->references('id')->on('store_items')->index('store_item_id')->onDelete('cascade');
 
             $table->timestamps();

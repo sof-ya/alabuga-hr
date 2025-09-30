@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('user_competencies', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('user_id')->comment('Идентификатор пользователя');
+            $table->unsignedBigInteger('user_id')->comment('Идентификатор пользователя');
             $table->foreign('user_id')->references('id')->on('users')->index('user_id')->onDelete('cascade');
 
-            $table->unsignedInteger('competency_id')->comment('Идентификатор компетенции');
+            $table->unsignedBigInteger('competency_id')->comment('Идентификатор компетенции');
             $table->foreign('competency_id')->references('id')->on('сompetencies')->index('competency_id')->onDelete('cascade');
 
             $table->integer('level')->comment('Уровень владения компетенцией');

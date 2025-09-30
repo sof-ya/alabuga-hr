@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_logs', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('user_id')->comment('Идентификатор пользователя, совершившего действие');
+            $table->unsignedBigInteger('user_id')->comment('Идентификатор пользователя, совершившего действие');
             $table->foreign('user_id')->references('id')->on('users')->index('user_id')->onDelete('cascade');
 
             $table->text('action')->comment('Описание действия');

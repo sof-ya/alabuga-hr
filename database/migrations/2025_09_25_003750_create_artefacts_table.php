@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('artefacts', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('rarity_id')->comment('Редкость артефакта');
+            $table->unsignedBigInteger('rarity_id')->comment('Редкость артефакта');
             $table->foreign('rarity_id')->references('id')->on('rarities')->index('rarity_id')->onDelete('cascade');
 
             $table->string('name')->comment('Название артефакта');

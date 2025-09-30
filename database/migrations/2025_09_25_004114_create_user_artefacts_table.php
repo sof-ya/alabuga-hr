@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('user_artefacts', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('user_id')->comment('Идентификатор пользователя');
+            $table->unsignedBigInteger('user_id')->comment('Идентификатор пользователя');
             $table->foreign('user_id')->references('id')->on('users')->index('user_id')->onDelete('cascade');
 
-            $table->unsignedInteger('artefact_id')->comment('Идентификатор артефакта');
+            $table->unsignedBigInteger('artefact_id')->comment('Идентификатор артефакта');
             $table->foreign('artefact_id')->references('id')->on('artefacts')->index('artefact_id')->onDelete('cascade');
 
             $table->timestamps();

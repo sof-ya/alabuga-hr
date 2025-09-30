@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('branch_missions', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('branch_id')->comment('Идентификатор ветки');
+            $table->unsignedBigInteger('branch_id')->comment('Идентификатор ветки');
             $table->foreign('branch_id')->references('id')->on('branches')->index('branch_id')->onDelete('cascade');
 
-            $table->unsignedInteger('mission_id')->comment('Идентификатор миссии');
+            $table->unsignedBigInteger('mission_id')->comment('Идентификатор миссии');
             $table->foreign('mission_id')->references('id')->on('missions')->index('mission_id')->onDelete('cascade');
 
             $table->integer('mission_order')->comment('Порядковый номер миссии');

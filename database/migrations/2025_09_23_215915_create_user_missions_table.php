@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('user_missions', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('user_id')->comment('Идентификатор пользователя');
+            $table->unsignedBigInteger('user_id')->comment('Идентификатор пользователя');
             $table->foreign('user_id')->references('id')->on('users')->index('user_id')->onDelete('cascade');
 
-            $table->unsignedInteger('mission_id')->comment('Идентификатор миссии');
+            $table->unsignedBigInteger('mission_id')->comment('Идентификатор миссии');
             $table->foreign('mission_id')->references('id')->on('missions')->index('mission_id')->onDelete('cascade')->comment('Идентификатор миссии');
             
             $table->string('status_mission')->comment('Статус миссии для пользователя');

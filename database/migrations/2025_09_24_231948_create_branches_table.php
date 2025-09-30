@@ -19,10 +19,10 @@ return new class extends Migration
             $table->text('image_url')->nullable()->comment('Ссылка на изображение ветки');
             $table->integer('priority_rank')->comment('Позиция ветки у пользователя в профиле');
 
-            $table->unsignedInteger('requirement_role_id')->comment('Необходимая роль');
+            $table->unsignedBigInteger('requirement_role_id')->comment('Необходимая роль');
             $table->foreign('requirement_role_id')->references('id')->on('roles')->index('requirement_role_id')->onDelete('cascade');
 
-            $table->unsignedInteger('requirement_rank_id')->comment('Необходимый ранг');
+            $table->unsignedBigInteger('requirement_rank_id')->comment('Необходимый ранг');
             $table->foreign('requirement_rank_id')->references('id')->on('ranks')->index('requirement_rank_id')->onDelete('cascade');;
             
             $table->integer('requirement_experience')->comment('Необходимое значение опыта');
