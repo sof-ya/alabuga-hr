@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('user_id')->comment('Идентификатор пользователя, совершившего действие');
-            $table->foreign('user_id')->references('id')->on('users')->index('user_id')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->text('action')->comment('Описание действия');
             $table->text('details')->comment('Детали действия');

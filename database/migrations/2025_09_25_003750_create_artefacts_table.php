@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('rarity_id')->comment('Редкость артефакта');
-            $table->foreign('rarity_id')->references('id')->on('rarities')->index('rarity_id')->onDelete('cascade');
+            $table->foreign('rarity_id')->references('id')->on('rarities')->onDelete('cascade');
 
             $table->string('name')->comment('Название артефакта');
             $table->text('description')->nullable()->comment('Описание артефакта');

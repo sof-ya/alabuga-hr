@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('user_id')->comment('Идентификатор пользователя');
-            $table->foreign('user_id')->references('id')->on('users')->index('user_id')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('artefact_id')->comment('Идентификатор артефакта');
-            $table->foreign('artefact_id')->references('id')->on('artefacts')->index('artefact_id')->onDelete('cascade');
+            $table->foreign('artefact_id')->references('id')->on('artefacts')->onDelete('cascade');
 
             $table->timestamps();
         });

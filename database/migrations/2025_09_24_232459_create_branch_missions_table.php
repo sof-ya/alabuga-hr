@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('branch_id')->comment('Идентификатор ветки');
-            $table->foreign('branch_id')->references('id')->on('branches')->index('branch_id')->onDelete('cascade');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
 
             $table->unsignedBigInteger('mission_id')->comment('Идентификатор миссии');
-            $table->foreign('mission_id')->references('id')->on('missions')->index('mission_id')->onDelete('cascade');
+            $table->foreign('mission_id')->references('id')->on('missions')->onDelete('cascade');
 
             $table->integer('mission_order')->comment('Порядковый номер миссии');
             $table->boolean('is_active')->comment('Активна или выключена миссия в ветке');

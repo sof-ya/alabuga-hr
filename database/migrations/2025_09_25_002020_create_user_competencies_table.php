@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('user_id')->comment('Идентификатор пользователя');
-            $table->foreign('user_id')->references('id')->on('users')->index('user_id')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('competency_id')->comment('Идентификатор компетенции');
-            $table->foreign('competency_id')->references('id')->on('сompetencies')->index('competency_id')->onDelete('cascade');
+            $table->foreign('competency_id')->references('id')->on('сompetencies')->onDelete('cascade');
 
             $table->integer('level')->comment('Уровень владения компетенцией');
 
