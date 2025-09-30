@@ -2,7 +2,9 @@
     <button
     :class="{
         'active':!props.disabled,
-        'disabled':props.disabled
+        'disabled':props.disabled,
+        'blue':props.state,
+        'white':!props.state
     }"
     class="flex items-center justify-center"
     :disabled="props.disabled"
@@ -19,6 +21,10 @@ const props = defineProps({
         default:'Текст кнопки'
     },
     disabled:{
+        type:Boolean,
+        default:false
+    },
+    state:{
         type:Boolean,
         default:false
     }
@@ -41,17 +47,20 @@ const handleClick = (event) => {
         font-family: var(--font-family);
         font-weight: 700;
         font-size: 16px;
-        color: var(--white-500);
+        
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
     }
-    .active{
+    .blue {
         background: var(--blue-500);
+        color: var(--white-500);
     }
-    .disabled{
-        background: var(--white-300);
+    .white{
+        color: var(--blue-500);
+        background: var(--white-50);
+        border: 1px solid var(--blue-500);
     }
 
 

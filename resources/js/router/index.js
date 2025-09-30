@@ -6,7 +6,7 @@ const routes = [
     {
         path: '/',
         name: 'Home',
-        component: () => import('../components/Pages/HomePage.vue'),
+        component: () => import('../Pages/HomePage.vue'),
         meta: {
             title: 'Главная',
             requiresAuth: true
@@ -15,7 +15,7 @@ const routes = [
     {
         path: '/about',
         name: 'About',
-        component: () => import('../components/Pages/AboutPage.vue'),
+        component: () => import('../Pages/AboutPage.vue'),
         meta: {
             title: 'О нас',
             requiresAuth: true
@@ -24,7 +24,7 @@ const routes = [
     {
         path: '/lk',
         name: 'userPage',
-        component: () => import('../components/Pages/LkPage.vue'),
+        component: () => import('../Pages/LkPage.vue'),
         meta: {
             title: 'Личный кабинет',
             requiresAuth: true
@@ -33,7 +33,7 @@ const routes = [
     {
         path: '/shop',
         name: 'shop',
-        component: () => import('../components/Pages/ShopPage.vue'),
+        component: () => import('../Pages/ShopPage.vue'),
         meta: {
             title: 'Магазин',
             requiresAuth: true
@@ -42,7 +42,7 @@ const routes = [
     {
         path: '/warehouse',
         name: 'warehouse',
-        component: () => import('../components/Pages/WarehousePage.vue'),
+        component: () => import('../Pages/WarehousePage.vue'),
         meta: {
             title: 'Хранилище',
             requiresAuth: true
@@ -51,7 +51,7 @@ const routes = [
     {
         path: '/competencies',
         name: 'Competencies',
-        component: () => import('../components/Pages/CompetenciesPage.vue'),
+        component: () => import('../Pages/CompetenciesPage.vue'),
         meta: {
             title: 'Компетенции',
             requiresAuth: true
@@ -60,7 +60,7 @@ const routes = [
     {
         path: '/missions',
         name: 'Missions',
-        component: () => import('../components/Pages/MissionsPage.vue'),
+        component: () => import('../Pages/MissionsPage.vue'),
         meta: {
             title: 'Миссии',
             requiresAuth: true
@@ -69,7 +69,7 @@ const routes = [
     {
         path: '/raiting',
         name: 'raiting',
-        component: () => import('../components/Pages/RaitingPage.vue'),
+        component: () => import('../Pages/RaitingPage.vue'),
         meta: {
             title: 'Рейтинг',
             requiresAuth: true
@@ -78,7 +78,7 @@ const routes = [
     {
         path: '/actionlog',
         name: 'actionlog',
-        component: () => import('../components/Pages/LogPage.vue'),
+        component: () => import('../Pages/LogPage.vue'),
         meta: {
             title: 'Журнал действий',
             requiresAuth: true
@@ -87,7 +87,7 @@ const routes = [
     {
         path: '/notifications',
         name: 'notifications',
-        component: () => import('../components/Pages/NotificationPage.vue'),
+        component: () => import('../Pages/NotificationPage.vue'),
         meta: {
             title: 'Уведомления',
             requiresAuth: true
@@ -96,7 +96,7 @@ const routes = [
     {
         path: '/artifacts',
         name: 'artifacts',
-        component: () => import('../components/Pages/ArtifactsPage.vue'),
+        component: () => import('../Pages/ArtifactsPage.vue'),
         meta: {
             title: 'Артефакты',
             requiresAuth: true
@@ -105,7 +105,7 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: () => import('../components/Pages/LoginPage.vue'),
+        component: () => import('../Pages/LoginPage.vue'),
         meta: {
             title: 'Форма входа',
             requiresGuest: true 
@@ -114,7 +114,7 @@ const routes = [
     {
         path: '/registration',
         name: 'registration',
-        component: () => import('../components/Pages/RegistrationPage.vue'),
+        component: () => import('../Pages/RegistrationPage.vue'),
         meta: {
             title: 'Регистрация',
             requiresGuest: true
@@ -123,7 +123,7 @@ const routes = [
     {
         path: '/divorce',
         name: 'divorce',
-        component: () => import('../components/Pages/DevorcePage.vue'),
+        component: () => import('../Pages/DevorcePage.vue'),
         meta: {
             title: 'Разводная страница'
         }
@@ -131,7 +131,7 @@ const routes = [
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
-        component: () => import('../components/Pages/NotFound.vue'),
+        component: () => import('../Pages/NotFound.vue'),
         meta: {
             title: 'Страница не найдена'
         }

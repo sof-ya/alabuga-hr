@@ -90,10 +90,10 @@
 </template>
 
 <script setup>
-import { useSiteState } from '../../store/SiteState';
-import LkLayout from '../Layout/LkLayout.vue';
+import { useSiteState } from '../store/SiteState';
+import LkLayout from '../components/Layout/LkLayout.vue';
 import { computed, onMounted, ref } from 'vue'
-import { useUserStore } from '../../store/UserStore'
+import { useUserStore } from '../store/UserStore'
 
 const userStore = useUserStore()
 const siteState = useSiteState()

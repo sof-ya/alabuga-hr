@@ -34,11 +34,11 @@
 
 <script setup>
 import { reactive, ref } from 'vue';
-import InputComponent from '../form/InputComponent.vue';
-import ButtonComponent from '../ui/ButtonComponent.vue';
-import LoginLayOut from '../Layout/LoginLayOut.vue';
+import InputComponent from '../components/form/InputComponent.vue';
+import ButtonComponent from '../components/ui/ButtonComponent.vue';
+import LoginLayOut from '../components/Layout/LoginLayOut.vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '../../store/UserStore';
+import { useUserStore } from '../store/UserStore';
 const router = useRouter()
 const userStore = useUserStore()
 

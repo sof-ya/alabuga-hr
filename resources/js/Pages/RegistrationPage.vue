@@ -54,10 +54,10 @@
 
 <script setup>
 import { reactive } from 'vue';
-import InputComponent from '../form/InputComponent.vue';
-import ButtonComponent from '../ui/ButtonComponent.vue';
-import CheckboxComponent from '../form/CheckboxComponent.vue';
-import LoginLayOut from '../Layout/LoginLayOut.vue';
+import InputComponent from '../components/form/InputComponent.vue';
+import ButtonComponent from '../components/ui/ButtonComponent.vue';
+import CheckboxComponent from '../components/form/CheckboxComponent.vue';
+import LoginLayOut from '../components/Layout/LoginLayOut.vue';
 
 const form = reactive({
     name:'',
