@@ -20,10 +20,10 @@ return new class extends Migration
             $table->integer('priority_rank')->comment('Позиция ветки у пользователя в профиле');
 
             $table->unsignedBigInteger('requirement_role_id')->comment('Необходимая роль');
-            $table->foreign('requirement_role_id')->references('id')->on('roles')->index('requirement_role_id')->onDelete('cascade');
+            $table->foreign('requirement_role_id')->references('id')->on('roles')->onDelete('cascade');
 
             $table->unsignedBigInteger('requirement_rank_id')->comment('Необходимый ранг');
-            $table->foreign('requirement_rank_id')->references('id')->on('ranks')->index('requirement_rank_id')->onDelete('cascade');;
+            $table->foreign('requirement_rank_id')->references('id')->on('ranks')->onDelete('cascade');;
             
             $table->integer('requirement_experience')->comment('Необходимое значение опыта');
             $table->boolean('is_visible')->comment('Флаг видимости ветки (серым), если она пока недоступна');
