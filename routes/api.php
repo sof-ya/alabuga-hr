@@ -3,6 +3,7 @@
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\JWTController;
 use App\Http\Controllers\MissionController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,9 @@ Route::as('api.')->group(function () {
         Route::get('branches/{branch}/missions', [BranchController::class, 'missionsList']);
 
         Route::post('missions/{mission}/result', [MissionController::class, 'addResultToUser']);
+
+        Route::get('/rating/list', [RatingController::class, 'getUsersRating']);
+        Route::get('/rating/current', [RatingController::class, 'getMyRatingPosition']);
     });
 });
 

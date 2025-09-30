@@ -112,6 +112,56 @@ use OpenApi\Attributes as OAT;
         ),
     ]
 )]
+#[OAT\Schema(
+    schema: "UsersRatingResponse",
+    description: "Ответ со списком пользователей в рейтинге",
+    properties: [
+        new OAT\Property(
+            property: "users",
+            type: "array",
+            description: "Список пользователей, отсортированный по опыту (по убыванию)",
+            items: new OAT\Items(ref: "#/components/schemas/User")
+        ),
+        new OAT\Property(
+            property: "filters",
+            type: "object",
+            description: "Фильтры, примененные к рейтингу",
+            properties: [
+                new OAT\Property(property: "role_id", type: "integer", description: "ID роли", example: 1),
+                new OAT\Property(property: "rank_id", type: "integer", description: "ID ранга", example: 2),
+            ]
+        ),
+    ]
+)]
+#[OAT\Schema(
+    schema: "UserPositionResponse",
+    description: "Ответ с позицией пользователя в рейтинге",
+    properties: [
+        new OAT\Property(
+            property: "user_position",
+            type: "integer",
+            description: "Позиция пользователя в рейтинге (чем меньше число, тем выше позиция)",
+            example: 5
+        ),
+        new OAT\Property(
+            property: "filters",
+            type: "object",
+            description: "Фильтры, примененные к рейтингу",
+            properties: [
+                new OAT\Property(
+                    property: "role_id",
+                    ref: "#/components/schemas/Role",
+                    description: "Объект роли"
+                ),
+                new OAT\Property(
+                    property: "rank_id", 
+                    ref: "#/components/schemas/Rank",
+                    description: "Объект ранга"
+                ),
+            ]
+        ),
+    ]
+)]
 final class ApiResponse
 {
     

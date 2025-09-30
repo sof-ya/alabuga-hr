@@ -314,7 +314,7 @@
         "/api/missions/{mission}/result": {
             "post": {
                 "tags": [
-                    "Missions"
+                    "missions"
                 ],
                 "summary": "Добавить результат выполнения миссии пользователем",
                 "description": "Позволяет пользователю добавить результат выполнения миссии (файл или текст)",
@@ -418,6 +418,118 @@
                     },
                     "404": {
                         "description": "Миссия не найдена"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/api/rating/list": {
+            "get": {
+                "tags": [
+                    "rating"
+                ],
+                "summary": "Получить рейтинг пользователей по текущей роли и рангу",
+                "description": "Возвращает список пользователей, отсортированный по опыту (experience) в рамках роли и ранга текущего авторизованного пользователя",
+                "operationId": "25e148cd5dff10f29b4952e7bb3a02b4",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ со списком пользователей в рейтинге",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/UsersRatingResponse"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизованный доступ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/api/rating/current": {
+            "get": {
+                "tags": [
+                    "rating"
+                ],
+                "summary": "Получить позицию текущего пользователя в рейтинге",
+                "description": "Возвращает позицию текущего авторизованного пользователя в рейтинге в рамках его роли и ранга",
+                "operationId": "17eaae2949ced6d97575b61c657abacc",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ с позицией пользователя в рейтинге",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/UserPositionResponse"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизованный доступ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -703,6 +815,58 @@
                             },
                             "type": "object"
                         }
+                    }
+                },
+                "type": "object"
+            },
+            "UsersRatingResponse": {
+                "description": "Ответ со списком пользователей в рейтинге",
+                "properties": {
+                    "users": {
+                        "description": "Список пользователей, отсортированный по опыту (по убыванию)",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    },
+                    "filters": {
+                        "description": "Фильтры, примененные к рейтингу",
+                        "properties": {
+                            "role_id": {
+                                "description": "ID роли",
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "rank_id": {
+                                "description": "ID ранга",
+                                "type": "integer",
+                                "example": 2
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "UserPositionResponse": {
+                "description": "Ответ с позицией пользователя в рейтинге",
+                "properties": {
+                    "user_position": {
+                        "description": "Позиция пользователя в рейтинге (чем меньше число, тем выше позиция)",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "filters": {
+                        "description": "Фильтры, примененные к рейтингу",
+                        "properties": {
+                            "role_id": {
+                                "$ref": "#/components/schemas/Role"
+                            },
+                            "rank_id": {
+                                "$ref": "#/components/schemas/Rank"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"
@@ -1405,8 +1569,12 @@
             "description": "auth"
         },
         {
-            "name": "Missions",
-            "description": "Missions"
+            "name": "missions",
+            "description": "missions"
+        },
+        {
+            "name": "rating",
+            "description": "rating"
         },
         {
             "name": "store",
