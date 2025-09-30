@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserMission extends Model
 {
+    protected $table = 'user_missions';
+
     protected $fillable = [
         'user_id',
         'mission_id',

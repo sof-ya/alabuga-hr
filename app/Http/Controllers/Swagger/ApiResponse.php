@@ -74,6 +74,44 @@ use OpenApi\Attributes as OAT;
                 new OAT\Property(property: 'expires_in', type: 'integer', example: 3600),
                 ])),
 ]
+#[OAT\Schema(
+    schema: "BranchRequirements",
+    description: "Требования и прогресс ветки",
+    properties: [
+        new OAT\Property(property: "role", ref: "#/components/schemas/Role", description: "Требуемая роль"),
+        new OAT\Property(property: "experience", type: "integer", description: "Требуемый опыт", example: 1000),
+        new OAT\Property(
+            property: "branches",
+            type: "array",
+            description: "Зависимые ветки с прогрессом",
+            items: new OAT\Items(
+                properties: [
+                    new OAT\Property(property: "branch_requirement_id", type: "integer", example: 2),
+                    new OAT\Property(property: "branch_name", type: "string", example: "Ветка 2"),
+                    new OAT\Property(property: "total_missions", type: "integer", example: 5),
+                    new OAT\Property(property: "completed_missions", type: "integer", example: 3),
+                    new OAT\Property(property: "is_completed", type: "boolean", example: false),
+                    new OAT\Property(property: "progress_percent", type: "integer", example: 60),
+                    new OAT\Property(property: "status_display", type: "string", example: "В процессе (3/5)"),
+                ]
+            )
+        ),
+        new OAT\Property(
+            property: "missions",
+            type: "array",
+            description: "Миссии с статусом выполнения",
+            items: new OAT\Items(
+                properties: [
+                    new OAT\Property(property: "id", type: "integer", example: 1),
+                    new OAT\Property(property: "name", type: "string", example: "Миссия 1"),
+                    new OAT\Property(property: "description", type: "string", example: "Описание миссии"),
+                    new OAT\Property(property: "status_mission", type: "string", example: "Завершено"),
+                    new OAT\Property(property: "is_completed", type: "boolean", example: true),
+                ]
+            )
+        ),
+    ]
+)]
 final class ApiResponse
 {
     

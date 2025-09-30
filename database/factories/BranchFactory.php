@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Branch;
+use App\Models\Rank;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +20,16 @@ class BranchFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->title(),
+            'description' => fake()->text(),
+            'priority_rank' => fake()->unique()->randomNumber(Branch::all()->count()+1),
+            'requirement_role_id' => Role::all()->random()->id,
+            'requirement_rank_id' => Rank::all()->random()->id,
+            'requirement_experience' => fake()->numberBetween(0, 100),
+            'is_visible' => true,
+            'is_active' => true,
+            'reward_experience' => fake()->numberBetween(0, 100),
+            'reward_gold' => fake()->numberBetween(0, 100),
         ];
     }
 }
