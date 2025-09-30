@@ -11,7 +11,12 @@ class MissionService
     public function addResultToUser(Mission $mission, ?UploadedFile $file = null, ?string $text) : Mission {
         $user = auth()->user();
         
-        $filename = Storage::disk('public')->put('files/missions_results/user'.auth()->user()->id.'/mission'.$mission->id, $file);
+        $filename = null;
+
+        if ($file) {
+            $filename = Storage::disk('public')->put('files/missions_results/user'.auth()->user()->id.'/mission'.$mission->id, $file);
+        }
+        
         $resultJson = json_encode([
             'file' => $filename,
             'text' => $text

@@ -6,7 +6,7 @@ use App\Http\Responses\BaseResponse;
 use App\Models\Mission;
 use App\Services\MissionService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class MissionController extends Controller
 {
@@ -51,15 +51,25 @@ class MissionController extends Controller
     }
 
     public function addResultToUser(Mission $mission, Request $request, MissionService $service) : BaseResponse {
-        $validated = $request->validate([
-            'file' => [
-                'file'
-            ], 
-            'text' => [
-                'string'
-            ]
+        $validator = Validator::make($request->all(), [
+            'file' => 'nullable|file',
+            'text' => 'nullable|required_without:file|string'
+        ], [
+            'file.file' => 'Поле должно содержать файл',
+            'text.required_without' => 'Необходимо предоставить либо файл, либо текст'
         ]);
 
-        return new BaseResponse($service->addResultToUser($mission, ...$validated));
+        if ($validator->fails()) {
+            return new BaseResponse([
+                'error' => 'Ошибка валидации',
+                'details' => $validator->errors()->toArray()
+            ], 422);
+        }
+
+        $file = $request->file('file');
+        $text = $validated['text'] ?? null;
+
+
+        return new BaseResponse($service->addResultToUser($mission, $file, $text));
     }
 }
