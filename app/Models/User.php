@@ -111,7 +111,8 @@ class User extends Authenticatable implements JWTSubject
 
     public function missions() : BelongsToMany
     {
-        return $this->belongsToMany(Mission::class, 'user_missions');
+        return $this->belongsToMany(Mission::class, 'user_missions')
+            ->withPivot('status_mission', 'result');
     }
 
     public function storeItems() : BelongsToMany

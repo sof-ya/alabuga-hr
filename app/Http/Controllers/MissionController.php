@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Responses\BaseResponse;
 use App\Models\Mission;
+use App\Services\MissionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MissionController extends Controller
 {
@@ -45,5 +48,18 @@ class MissionController extends Controller
     public function destroy(Mission $mission)
     {
         //
+    }
+
+    public function addResultToUser(Mission $mission, Request $request, MissionService $service) : BaseResponse {
+        $validated = $request->validate([
+            'file' => [
+                'file'
+            ], 
+            'text' => [
+                'string'
+            ]
+        ]);
+
+        return new BaseResponse($service->addResultToUser($mission, ...$validated));
     }
 }
