@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         User::factory(40)->create();
 
         $this->call(MissionCategorySeeder::class);
-        $this->call(СompetenceSeeder::class);
+        $this->call(CompetenceSeeder::class);
         $this->call(MissionSeeder::class);
         $this->call(MissionRewardCompetenceSeeder::class);
         $this->call(StoreItemSeeder::class);

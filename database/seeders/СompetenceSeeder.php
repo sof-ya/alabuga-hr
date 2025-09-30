@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Сompetence;
+use App\Models\Competence;
 use Illuminate\Database\Seeder;
 
-class СompetenceSeeder extends Seeder
+class CompetenceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Сompetence::factory(5)->create();
+        Competence::factory(5)->create();
     }
 }

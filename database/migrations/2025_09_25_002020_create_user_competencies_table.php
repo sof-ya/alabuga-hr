@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('competency_id')->comment('Идентификатор компетенции');
-            $table->foreign('competency_id')->references('id')->on('сompetencies')->onDelete('cascade');
+            $table->foreign('competency_id')->references('id')->on('competencies')->onDelete('cascade');
 
             $table->integer('level')->comment('Уровень владения компетенцией');
 
