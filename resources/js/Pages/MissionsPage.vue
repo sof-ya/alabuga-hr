@@ -22,49 +22,103 @@
             </div>
             <div v-if="activeTab === 'all'" 
             class="flex flex-col gap-2.5">
+            <div v-if="siteState.loading" class="text-center py-4">
+                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+                <p class="mt-2 text-gray-500">Загрузка...</p>
+            </div>
                 <MissionCategoryComponent
-                title="Название категории"
-                desc="Описание ветки спокойно адаптируется по высоте в зависимости от количества текста"
-                :progress="20"
-                @show-info="showCategoryInfo('categoryId')"
+                    v-for="mission in missionsState.allMissions.data"
+                    :title="mission.name"
+                    :desc="mission.description || 'Описание отсутствует'"
+                    :progress="20"
+                    @show-info="showCategoryInfo(mission.id)"
                 />
+
             </div>
             <div 
             v-if="activeTab === 'active'"
-            class="">
-                active
+            class="flex flex-col gap-2.5">
+                <div v-if="siteState.loading" class="text-center py-4">
+                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+                    <p class="mt-2 text-gray-500">Загрузка...</p>
+                </div>
+                <MissionCategoryComponent
+                    v-for="mission in missionsState.activeMissions.data"
+                    :title="mission.name"
+                    :desc="mission.description || 'Описание отсутствует'"
+                    :progress="20"
+                    @show-info="showCategoryInfo(mission.id)"
+                />
             </div>
             <div 
             v-if="activeTab === 'completed'"
-            class="">
-                completed
+            class="flex flex-col gap-2.5">
+                 <div v-if="siteState.loading" class="text-center py-4">
+                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+                    <p class="mt-2 text-gray-500">Загрузка...</p>
+                </div>
+                
+                <template v-if="missionsState.passedMissions">
+                    <MissionCategoryComponent 
+                        v-for="mission in missionsState.passedMissions.data"
+                        :title="mission.name"
+                        :desc="mission.description || 'Описание отсутствует'"
+                        :progress="20"
+                        @show-info="showCategoryInfo(mission.id)"
+                    /> 
+                </template>
+                <template v-else>
+                    <h2 class="mt-2 text-gray-500 text-center" >Завершённых миссий нет</h2>
+                </template>
             </div>
-<PopUpDownLayout
-v-if="popUpState"
-@close-popup="popUpState = false"
->
-poupupData
-</PopUpDownLayout>
+            <PopUpDownLayout
+            v-if="popUpState"
+            @close-popup="popUpState = false"
+            >
+            poupupData
+            </PopUpDownLayout>
         </div>
         
     </MainLayout>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import MainLayout from '../components/Layout/MainLayout.vue';
 import ButtonWithTwoStates from '../components/ui/ButtonWithTwoStates.vue'
-import MissionCategoryComponent from '../components/pages/missionsPage/MissionCategoryComponent.vue';
+
 import PopUpDownLayout from '../components/Layout/PopUpDownLayout.vue'
+import MissionCategoryComponent from '../components/pages/missionsPage/MissionCategoryComponent.vue'
+import { useMissionsStore } from '../store/MissionsStore';
+import { useSiteState } from '../store/SiteState';
 const activeTab=ref('all')
 const popUpState = ref(false)
+const missionsState = useMissionsStore()
+const siteState = useSiteState()
 const toggleTabs = (type)=>{
     activeTab.value = type
+    if(type === 'active'){
+        activeMissions()
+    }else if(type === 'completed'){
+        passedMissions()
+    }
 }
 const showCategoryInfo = (id)=>{
     popUpState.value=true
     console.log(id)
 }
+const activeMissions = async ()=>{
+    await missionsState.fetchActiveMissions()
+}
+const allMissions = async ()=>{
+    await missionsState.fetchAllMissions()
+}
+const passedMissions = async ()=>{
+    await missionsState.fetchPassedMissions()
+}
+onMounted(async ()=>{
+    await allMissions()
+})
 </script>
 
 <style lang="scss" scoped>
