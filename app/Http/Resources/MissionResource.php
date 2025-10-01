@@ -14,6 +14,8 @@ class MissionResource extends JsonResource
             'id' => $mission->id,
             'name' => $mission->name,
             'description' => $mission->descroption,
+            'reward_experience' => $mission->reward_experience,
+            'reward_gold' => $mission->reward_gold,
             'image' => $mission->image,
             'created_at' => $mission->created_at,
             'updated_at' => $mission->updated_at,
