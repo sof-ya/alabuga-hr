@@ -195,6 +195,72 @@
                 ]
             }
         },
+        "/api/competencies": {
+            "get": {
+                "tags": [
+                    "competencies"
+                ],
+                "summary": "Получить компетенции текущего пользователя",
+                "description": "Возвращает список всех компетенций текущего авторизованного пользователя с уровнями владения",
+                "operationId": "5acb6df6bd45d3146d3e756f7e9938ea",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ со списком компетенций пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "Массив компетенций пользователя с уровнями владения",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/CompetencyResponse"
+                                            }
+                                        },
+                                        "message": {
+                                            "description": "Сообщение ответа",
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "status": {
+                                            "description": "HTTP статус код",
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизованный доступ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
         "/api/auth/login": {
             "post": {
                 "tags": [
@@ -871,6 +937,68 @@
                 },
                 "type": "object"
             },
+            "CompetencyResponse": {
+                "description": "Компетенция пользователя с уровнем владения",
+                "properties": {
+                    "id": {
+                        "description": "Уникальный идентификатор компетенции",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Название компетенции",
+                        "type": "string",
+                        "example": "Компетенция"
+                    },
+                    "description": {
+                        "description": "Описание компетенции",
+                        "type": "string",
+                        "example": "Очень полезная компетенция",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Дата создания компетенции",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-10-01T00:11:07.000000Z"
+                    },
+                    "updated_at": {
+                        "description": "Дата обновления компетенции",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-10-01T00:11:07.000000Z"
+                    },
+                    "pivot": {
+                        "$ref": "#/components/schemas/CompetencyPivot"
+                    }
+                },
+                "type": "object"
+            },
+            "CompetencyPivot": {
+                "description": "Данные связи пользователя и компетенции",
+                "properties": {
+                    "user_id": {
+                        "description": "ID пользователя",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "competency_id": {
+                        "description": "ID компетенции",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "level": {
+                        "description": "Уровень владения компетенцией",
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": 100
+                    }
+                },
+                "type": "object"
+            },
             "StoreItemCollection": {
                 "required": [
                     "data"
@@ -1032,6 +1160,42 @@
                         "description": "Золото за завершение ветки",
                         "type": "integer",
                         "example": 200
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Дата обновления",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Competence": {
+                "description": "Модель компетенций",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID компетенции",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Название компетенции",
+                        "type": "string",
+                        "example": "Название"
+                    },
+                    "description": {
+                        "description": "Описание компетенции",
+                        "type": "string",
+                        "example": "Очень полезная компетенция",
+                        "nullable": true
                     },
                     "created_at": {
                         "description": "Дата создания",
@@ -1563,6 +1727,10 @@
         {
             "name": "branches",
             "description": "branches"
+        },
+        {
+            "name": "competencies",
+            "description": "competencies"
         },
         {
             "name": "auth",
