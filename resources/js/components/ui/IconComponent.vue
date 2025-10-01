@@ -15,7 +15,7 @@ const props = defineProps({
   name: {
     type: String,
     required: true,
-    validator: (value) => ['check','close','arrow','home', 'missions', 'artifacts', 'rating', 'competencies', 'shop', 'dongle','money'].includes(value)
+    validator: (value) => ['exp','check','close','arrow','home', 'missions', 'artifacts', 'rating', 'competencies', 'shop', 'dongle','money'].includes(value)
   },
   isActive: {
     type: Boolean,

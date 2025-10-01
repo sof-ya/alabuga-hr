@@ -29,7 +29,22 @@
         <div class=" data__item" v-for="data in arrayData">
             <h3 class="data__title">{{ data.name }}</h3>
             <p class="data__desc">{{ data.description || 'Описание отсутствует' }}</p>
+                <div class="data__footer">
+                    <div class="data__gold">
+                        <IconComponent
+                        name="money"/>
+                         <span>+{{ data.reward_gold }} лакоинов</span>
+                    </div>
+                    <div class="data__exp">
+                        <IconComponent
+                        name="exp"/>
+                        <span>+{{ data.reward_experience }} HP</span>
+                        
+                    </div>
+                    
+                </div>
         </div>
+
     </div>
 </template>
 
@@ -66,8 +81,11 @@ const props = defineProps({
 })
 const toggleActivity = async()=>{
     activity.value=!activity.value
-    await missionsState.getMissionBranche(props.dataId)
-    arrayData.value = missionsState.missionBranchData.data
+    if(arrayData.value.length == 0){
+        await missionsState.getMissionBranche(props.dataId)
+        arrayData.value = missionsState.missionBranchData.data
+    }
+
 }
 </script>
 
@@ -129,11 +147,17 @@ const toggleActivity = async()=>{
         background: var(--white-500);
         border-radius: 12px;
         padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
     .data__item{
         background: var(--white-50);
         border-radius: 12px;
         padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
     .data__title{
         font-family: var(--font-family);
@@ -146,5 +170,31 @@ const toggleActivity = async()=>{
         font-weight: 400;
         font-size: 13px;
         color: var(--white-950);
+    }
+    .data__footer{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .data__exp,
+    .data__gold{
+        display: grid;
+        grid-template-columns:16px  1fr ;
+        gap:4px;
+        svg{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .data__exp{
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 10px;
+        color: var(--blue-700);
+    }
+    .data__gold{
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 10px;
+        color: var(--yellow-600);
     }
 </style>
