@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('mission_id')->references('id')->on('missions')->onDelete('cascade')->comment('Идентификатор миссии');
 
             $table->unsignedBigInteger('competence_id')->comment('Идентификатор компетенции');
-            $table->foreign('competence_id')->references('id')->on('сompetencies')->onDelete('cascade')->comment('Идентификатор компетенции');
+            $table->foreign('competence_id')->references('id')->on('competencies')->onDelete('cascade')->comment('Идентификатор компетенции');
 
             $table->integer('level_increase')->comment('Увеличение уровня компетенции за выполнение миссии');
             $table->timestamps();

@@ -162,6 +162,79 @@ use OpenApi\Attributes as OAT;
         ),
     ]
 )]
+
+#[OAT\Schema(
+    schema: "CompetencyResponse",
+    description: "Компетенция пользователя с уровнем владения",
+    properties: [
+        new OAT\Property(
+            property: "id",
+            type: "integer",
+            format: "int64",
+            description: "Уникальный идентификатор компетенции",
+            example: 1
+        ),
+        new OAT\Property(
+            property: "name",
+            type: "string",
+            description: "Название компетенции",
+            example: "Компетенция"
+        ),
+        new OAT\Property(
+            property: "description",
+            type: "string",
+            nullable: true,
+            description: "Описание компетенции",
+            example: "Очень полезная компетенция"
+        ),
+        new OAT\Property(
+            property: "created_at",
+            type: "string",
+            format: "date-time",
+            description: "Дата создания компетенции",
+            example: "2025-10-01T00:11:07.000000Z"
+        ),
+        new OAT\Property(
+            property: "updated_at",
+            type: "string",
+            format: "date-time",
+            description: "Дата обновления компетенции", 
+            example: "2025-10-01T00:11:07.000000Z"
+        ),
+        new OAT\Property(
+            property: "pivot",
+            ref: "#/components/schemas/CompetencyPivot",
+            description: "Данные о связи пользователя с компетенцией"
+        ),
+    ]
+)]
+#[OAT\Schema(
+    schema: "CompetencyPivot",
+    description: "Данные связи пользователя и компетенции",
+    properties: [
+        new OAT\Property(
+            property: "user_id",
+            type: "integer",
+            format: "int64",
+            description: "ID пользователя",
+            example: 1
+        ),
+        new OAT\Property(
+            property: "competency_id",
+            type: "integer",
+            format: "int64",
+            description: "ID компетенции",
+            example: 1
+        ),
+        new OAT\Property(
+            property: "level",
+            type: "integer",
+            description: "Уровень владения компетенцией",
+            minimum: 0,
+            example: 100
+        ),
+    ]
+)]
 final class ApiResponse
 {
     
