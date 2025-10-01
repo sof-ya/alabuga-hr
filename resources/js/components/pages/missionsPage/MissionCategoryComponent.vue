@@ -18,7 +18,7 @@
             <div class="progress_persent" :style="`width: ${props.progress}%; min-width: 20px;`">{{ props.progress }}%</div>
         </div>
         <div class="flex flex-row justify-end pt-5">
-            <button class="button" @click="emit('showInfo')">Подробнее о категории</button>
+            <button class="button" @click="()=>missionsState.getBranchProgress(props.dataId)">Подробнее о категории</button>
         </div>
     </div>
     <div class="data" v-if="activity">

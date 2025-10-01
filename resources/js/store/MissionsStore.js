@@ -10,6 +10,9 @@ export const useMissionsStore = defineStore('missions',()=>{
     const siteState = useSiteState();
     const userStore = useUserStore();
     const missionBranchData = ref([])
+    const branchProgress = ref(null)
+    const popupLoader = ref(false)
+    const companyPopUpState = ref(false)
     const fetchAllMissions = async ()=>{
         if (!userStore.isAuthenticated) {
             console.log("Пользователь не авторизован");
@@ -251,15 +254,85 @@ export const useMissionsStore = defineStore('missions',()=>{
         }
         
     }
+ const getBranchProgress = async (id) => {
+        if (!userStore.isAuthenticated) {
+            console.log("Пользователь не авторизован");
+            return null;
+        }
+        companyPopUpState.value = true; 
+        popupLoader.value = true;
+        try {
+            const csrfToken = document.querySelector(
+                'meta[name="csrf-token"]'
+            )?.content;
+
+            console.log(" Загрузка требования и прогресса по ветки ...");
+
+            const response = await fetch(`/api/branches/requirements/${id}/`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "X-Requested-With": "XMLHttpRequest",
+                    ...(csrfToken && { "X-CSRF-TOKEN": csrfToken }),
+                    Authorization: `Bearer ${userStore.token}`,
+                },
+                credentials: "include",
+            });
+
+            console.log("Статус ответа :", response.status);
+
+            const contentType = response.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                const text = await response.text();
+                console.error(
+                    " Сервер  вернул не JSON:",
+                    text.substring(0, 200)
+                );
+                throw new Error(
+                    `Сервер вернул HTML вместо JSON. Status: ${response.status}`
+                );
+            }
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            branchProgress.value = data;
+            console.log("Элементы требования и прогресс по ветке:", data);
+            return data;
+        } catch (error) {
+            console.error(" Ошибка при получении требования и прогресс по ветке:", error);
+            branchProgress.value = null; // Сбрасываем при ошибке
+            if (error.message.includes("401")) {
+                console.log(" Токен невалиден");
+            }
+            return null;
+        } finally {
+            popupLoader.value = false;
+        }
+    }
+    const closeCompanyPopup = ()=>{
+        companyPopUpState.value=false
+        branchProgress.value = null;
+    }
+
 
     return{
+        branchProgress,
         allMissions,
         activeMissions,
         completedMissions,
         missionBranchData,
+        companyPopUpState,
+        popupLoader,
         fetchActiveMissions,
         fetchAllMissions,
         fetchPassedMissions,
-        getMissionBranche
+        getMissionBranche,
+        getBranchProgress,
+        closeCompanyPopup,
+        
     }
 })

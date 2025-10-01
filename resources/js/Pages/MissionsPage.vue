@@ -76,12 +76,8 @@
                     <h2 class="mt-2 text-gray-500 text-center" >Завершённых миссий нет</h2>
                 </template>
             </div>
-            <PopUpDownLayout
-            v-if="popUpState"
-            @close-popup="popUpState = false"
-            >
-            poupupData
-            </PopUpDownLayout>
+
+            <MissionsPopupComponent/>
         </div>
         
     </MainLayout>
@@ -92,10 +88,10 @@ import { onMounted, ref } from 'vue';
 import MainLayout from '../components/Layout/MainLayout.vue';
 import ButtonWithTwoStates from '../components/ui/ButtonWithTwoStates.vue'
 
-import PopUpDownLayout from '../components/Layout/PopUpDownLayout.vue'
 import MissionCategoryComponent from '../components/pages/missionsPage/MissionCategoryComponent.vue'
 import { useMissionsStore } from '../store/MissionsStore';
 import { useSiteState } from '../store/SiteState';
+import MissionsPopupComponent from '../components/pages/missionsPage/MissionsPopupComponent.vue';
 const activeTab=ref('all')
 const popUpState = ref(false)
 const missionsState = useMissionsStore()
