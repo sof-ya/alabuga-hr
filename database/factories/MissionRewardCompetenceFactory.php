@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Mission;
-use App\Models\Сompetence;
+use App\Models\Competence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +20,7 @@ class MissionRewardCompetenceFactory extends Factory
     {
         return [
             'mission_id' => Mission::all()->random()->id,
-            'competence_id' => Сompetence::all()->random()->id,
+            'competence_id' => Competence::all()->random()->id,
             'level_increase' => fake()->numberBetween(0, 100),
         ];
     }

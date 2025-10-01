@@ -5,6 +5,262 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/branches": {
+            "get": {
+                "tags": [
+                    "branches"
+                ],
+                "summary": "Получить список веток с пагинацией",
+                "description": "Возвращает список веток для текущего пользователя с возможностью фильтрации по завершенности",
+                "operationId": "8bad73dccf3e88f9ee9007d8d3eb1040",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Номер страницы",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Количество элементов на странице",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15,
+                            "maximum": 100,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "onlyCompleted",
+                        "in": "query",
+                        "description": "Фильтр по завершенным веткам",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ со списком веток",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/LengthAwarePaginator"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Branch"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизованный доступ"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/api/branches/requirements/{branch}": {
+            "get": {
+                "tags": [
+                    "branches"
+                ],
+                "summary": "Получить требования и прогресс по ветке",
+                "description": "Возвращает информацию о требованиях для доступа к ветке и текущий прогресс выполнения",
+                "operationId": "b0a06c71437935073f94a40a1bad4a95",
+                "parameters": [
+                    {
+                        "name": "branch",
+                        "in": "path",
+                        "description": "ID ветки",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ с требованиями ветки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/BranchRequirements"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизованный доступ"
+                    },
+                    "404": {
+                        "description": "Ветка не найдена"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/api/branches/{branch}/missions": {
+            "get": {
+                "tags": [
+                    "branches"
+                ],
+                "summary": "Получить список миссий ветки",
+                "description": "Возвращает все миссии, принадлежащие указанной ветке",
+                "operationId": "d2f64a395c8b2d717408b26bb2706cf0",
+                "parameters": [
+                    {
+                        "name": "branch",
+                        "in": "path",
+                        "description": "ID ветки",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ со списком миссий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Mission"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизованный доступ"
+                    },
+                    "404": {
+                        "description": "Ветка не найдена"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/api/competencies": {
+            "get": {
+                "tags": [
+                    "competencies"
+                ],
+                "summary": "Получить компетенции текущего пользователя",
+                "description": "Возвращает список всех компетенций текущего авторизованного пользователя с уровнями владения",
+                "operationId": "5acb6df6bd45d3146d3e756f7e9938ea",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ со списком компетенций пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "Массив компетенций пользователя с уровнями владения",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/CompetencyResponse"
+                                            }
+                                        },
+                                        "message": {
+                                            "description": "Сообщение ответа",
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "status": {
+                                            "description": "HTTP статус код",
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизованный доступ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
         "/api/auth/login": {
             "post": {
                 "tags": [
@@ -112,6 +368,234 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/ErrorResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/api/missions/{mission}/result": {
+            "post": {
+                "tags": [
+                    "missions"
+                ],
+                "summary": "Добавить результат выполнения миссии пользователем",
+                "description": "Позволяет пользователю добавить результат выполнения миссии (файл или текст)",
+                "operationId": "5a62e00ff2f763ae96be05996dad50c3",
+                "parameters": [
+                    {
+                        "name": "mission",
+                        "in": "path",
+                        "description": "ID миссии",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Данные результата выполнения миссии",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "description": "Файл результата",
+                                        "type": "string",
+                                        "format": "binary",
+                                        "nullable": true
+                                    },
+                                    "text": {
+                                        "description": "Текстовый результат",
+                                        "type": "string",
+                                        "example": "Описание выполненной работы",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Результат успешно добавлен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Mission"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Ошибка валидации"
+                                        },
+                                        "details": {
+                                            "properties": {
+                                                "file": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "text": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизованный доступ"
+                    },
+                    "404": {
+                        "description": "Миссия не найдена"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/api/rating/list": {
+            "get": {
+                "tags": [
+                    "rating"
+                ],
+                "summary": "Получить рейтинг пользователей по текущей роли и рангу",
+                "description": "Возвращает список пользователей, отсортированный по опыту (experience) в рамках роли и ранга текущего авторизованного пользователя",
+                "operationId": "25e148cd5dff10f29b4952e7bb3a02b4",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ со списком пользователей в рейтинге",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/UsersRatingResponse"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизованный доступ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/api/rating/current": {
+            "get": {
+                "tags": [
+                    "rating"
+                ],
+                "summary": "Получить позицию текущего пользователя в рейтинге",
+                "description": "Возвращает позицию текущего авторизованного пользователя в рейтинге в рамках его роли и ранга",
+                "operationId": "17eaae2949ced6d97575b61c657abacc",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ с позицией пользователя в рейтинге",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/UserPositionResponse"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизованный доступ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -321,6 +805,200 @@
                 },
                 "type": "object"
             },
+            "BranchRequirements": {
+                "description": "Требования и прогресс ветки",
+                "properties": {
+                    "role": {
+                        "$ref": "#/components/schemas/Role"
+                    },
+                    "experience": {
+                        "description": "Требуемый опыт",
+                        "type": "integer",
+                        "example": 1000
+                    },
+                    "branches": {
+                        "description": "Зависимые ветки с прогрессом",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "branch_requirement_id": {
+                                    "type": "integer",
+                                    "example": 2
+                                },
+                                "branch_name": {
+                                    "type": "string",
+                                    "example": "Ветка 2"
+                                },
+                                "total_missions": {
+                                    "type": "integer",
+                                    "example": 5
+                                },
+                                "completed_missions": {
+                                    "type": "integer",
+                                    "example": 3
+                                },
+                                "is_completed": {
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "progress_percent": {
+                                    "type": "integer",
+                                    "example": 60
+                                },
+                                "status_display": {
+                                    "type": "string",
+                                    "example": "В процессе (3/5)"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "missions": {
+                        "description": "Миссии с статусом выполнения",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "Миссия 1"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "Описание миссии"
+                                },
+                                "status_mission": {
+                                    "type": "string",
+                                    "example": "Завершено"
+                                },
+                                "is_completed": {
+                                    "type": "boolean",
+                                    "example": true
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "UsersRatingResponse": {
+                "description": "Ответ со списком пользователей в рейтинге",
+                "properties": {
+                    "users": {
+                        "description": "Список пользователей, отсортированный по опыту (по убыванию)",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    },
+                    "filters": {
+                        "description": "Фильтры, примененные к рейтингу",
+                        "properties": {
+                            "role_id": {
+                                "description": "ID роли",
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "rank_id": {
+                                "description": "ID ранга",
+                                "type": "integer",
+                                "example": 2
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "UserPositionResponse": {
+                "description": "Ответ с позицией пользователя в рейтинге",
+                "properties": {
+                    "user_position": {
+                        "description": "Позиция пользователя в рейтинге (чем меньше число, тем выше позиция)",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "filters": {
+                        "description": "Фильтры, примененные к рейтингу",
+                        "properties": {
+                            "role_id": {
+                                "$ref": "#/components/schemas/Role"
+                            },
+                            "rank_id": {
+                                "$ref": "#/components/schemas/Rank"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "CompetencyResponse": {
+                "description": "Компетенция пользователя с уровнем владения",
+                "properties": {
+                    "id": {
+                        "description": "Уникальный идентификатор компетенции",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Название компетенции",
+                        "type": "string",
+                        "example": "Компетенция"
+                    },
+                    "description": {
+                        "description": "Описание компетенции",
+                        "type": "string",
+                        "example": "Очень полезная компетенция",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Дата создания компетенции",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-10-01T00:11:07.000000Z"
+                    },
+                    "updated_at": {
+                        "description": "Дата обновления компетенции",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-10-01T00:11:07.000000Z"
+                    },
+                    "pivot": {
+                        "$ref": "#/components/schemas/CompetencyPivot"
+                    }
+                },
+                "type": "object"
+            },
+            "CompetencyPivot": {
+                "description": "Данные связи пользователя и компетенции",
+                "properties": {
+                    "user_id": {
+                        "description": "ID пользователя",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "competency_id": {
+                        "description": "ID компетенции",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "level": {
+                        "description": "Уровень владения компетенцией",
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": 100
+                    }
+                },
+                "type": "object"
+            },
             "StoreItemCollection": {
                 "required": [
                     "data"
@@ -397,6 +1075,350 @@
                         "type": "object"
                     }
                 ]
+            },
+            "Branch": {
+                "description": "Модель ветки заданий",
+                "required": [
+                    "name",
+                    "priority_rank",
+                    "requirement_role_id",
+                    "requirement_rank_id",
+                    "requirement_experience",
+                    "is_visible",
+                    "is_active",
+                    "reward_experience",
+                    "reward_gold"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID ветки",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Название ветки",
+                        "type": "string",
+                        "example": "Основная ветка"
+                    },
+                    "description": {
+                        "description": "Подробное описание ветки",
+                        "type": "string",
+                        "example": "Основная сюжетная ветка заданий",
+                        "nullable": true
+                    },
+                    "image_url": {
+                        "description": "Ссылка на изображение ветки",
+                        "type": "string",
+                        "example": "https://example.com/branches/main.png",
+                        "nullable": true
+                    },
+                    "priority_rank": {
+                        "description": "Позиция ветки у пользователя в профиле",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "requirement_role_id": {
+                        "description": "ID необходимой роли",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "requirement_rank_id": {
+                        "description": "ID необходимого ранга",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "requirement_experience": {
+                        "description": "Необходимое значение опыта",
+                        "type": "integer",
+                        "example": 1000
+                    },
+                    "is_visible": {
+                        "description": "Флаг видимости ветки",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "completion_deadline": {
+                        "description": "Крайний срок выполнения всей ветки",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "is_active": {
+                        "description": "Флаг активности ветки",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "reward_experience": {
+                        "description": "Опыт за завершение ветки",
+                        "type": "integer",
+                        "example": 500
+                    },
+                    "reward_gold": {
+                        "description": "Золото за завершение ветки",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Дата обновления",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Competence": {
+                "description": "Модель компетенций",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID компетенции",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Название компетенции",
+                        "type": "string",
+                        "example": "Название"
+                    },
+                    "description": {
+                        "description": "Описание компетенции",
+                        "type": "string",
+                        "example": "Очень полезная компетенция",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Дата обновления",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Mission": {
+                "description": "Модель задания/миссии",
+                "required": [
+                    "name",
+                    "mission_category_id",
+                    "requirement_role_id",
+                    "requirement_rank_id",
+                    "requirement_experience",
+                    "reward_experience",
+                    "reward_gold"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID миссии",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Название миссии",
+                        "type": "string",
+                        "example": "Первое задание"
+                    },
+                    "description": {
+                        "description": "Описание миссии",
+                        "type": "string",
+                        "example": "Выполните первое задание для получения опыта",
+                        "nullable": true
+                    },
+                    "image_url": {
+                        "description": "Иконка миссии",
+                        "type": "string",
+                        "example": "missions/first.png",
+                        "nullable": true
+                    },
+                    "completion_deadline": {
+                        "description": "Дедлайн выполнения миссии",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "mission_category_id": {
+                        "description": "ID типа миссии",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "requirement_role_id": {
+                        "description": "ID необходимой роли",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "requirement_rank_id": {
+                        "description": "ID необходимого ранга",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "requirement_experience": {
+                        "description": "Необходимое значение опыта",
+                        "type": "integer",
+                        "example": 500
+                    },
+                    "is_visible": {
+                        "description": "Флаг видимости миссии",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "is_active": {
+                        "description": "Флаг активности миссии",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "is_requirement_text": {
+                        "description": "Обязательность описания результата",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "is_requirement_file": {
+                        "description": "Обязательность прикрепления файла",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "reward_experience": {
+                        "description": "Опыт за завершение",
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "reward_gold": {
+                        "description": "Золото за завершение",
+                        "type": "integer",
+                        "example": 50
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Дата обновления",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Rank": {
+                "description": "Модель ранга пользователя",
+                "required": [
+                    "name",
+                    "required_experience",
+                    "required_role_id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID ранга",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Название ранга",
+                        "type": "string",
+                        "example": "beginner"
+                    },
+                    "description": {
+                        "description": "Описание ранга",
+                        "type": "string",
+                        "example": "Начинающий игрок",
+                        "nullable": true
+                    },
+                    "image_url": {
+                        "description": "Изображение ранга",
+                        "type": "string",
+                        "example": "https://example.com/ranks/beginner.png",
+                        "nullable": true
+                    },
+                    "required_experience": {
+                        "description": "Требуемый опыт для получения ранга",
+                        "type": "integer",
+                        "example": 1000
+                    },
+                    "required_role_id": {
+                        "description": "ID требуемой роли",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Дата обновления",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "description": "Дата удаления",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Role": {
+                "description": "Модель роли пользователя",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID роли",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Название роли",
+                        "type": "string",
+                        "example": "admin"
+                    },
+                    "description": {
+                        "description": "Описание роли",
+                        "type": "string",
+                        "example": "Администратор системы",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Дата обновления",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "description": "Дата удаления",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
             },
             "StoreItem": {
                 "properties": {
@@ -703,8 +1725,24 @@
     },
     "tags": [
         {
+            "name": "branches",
+            "description": "branches"
+        },
+        {
+            "name": "competencies",
+            "description": "competencies"
+        },
+        {
             "name": "auth",
             "description": "auth"
+        },
+        {
+            "name": "missions",
+            "description": "missions"
+        },
+        {
+            "name": "rating",
+            "description": "rating"
         },
         {
             "name": "store",

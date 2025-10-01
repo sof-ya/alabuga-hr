@@ -15,13 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(40)->create();
 
         $this->call(MissionCategorySeeder::class);
-        $this->call(СompetenceSeeder::class);
+        $this->call(CompetenceSeeder::class);
         $this->call(MissionSeeder::class);
         $this->call(MissionRewardCompetenceSeeder::class);
         $this->call(StoreItemSeeder::class);
+        $this->call(BranchSeeder::class);
 
         User::factory()->create([
             'name' => 'Test User',
