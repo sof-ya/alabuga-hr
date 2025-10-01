@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 
 use OpenApi\Attributes as OAT;
@@ -84,5 +85,13 @@ class Branch extends Model
             ->join('branch_missions as bm', 'b.id', '=', 'bm.branch_id')
             ->join('missions as m', 'bm.mission_id', '=', 'm.id')
             ->join('user_missions as um', 'm.id', '=', 'um.mission_id');
+    }
+
+    public function reqRole() : HasOne {
+        return $this->hasOne(Role::class, 'id', 'requirement_role_id');
+    }
+
+    public function reqRank() : HasOne {
+        return $this->hasOne(Rank::class, 'id', 'requirement_rank_id');
     }
 }
