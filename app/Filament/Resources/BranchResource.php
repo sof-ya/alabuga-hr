@@ -40,28 +40,30 @@ class BranchResource extends Resource
                     ->label('Позиция в профиле')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('requirement_role_id')
+                Forms\Components\Select::make('requirement_role_id')
+                    ->relationship(name: 'reqRole', titleAttribute: 'name')
                     ->label('Требуемая роль')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('requirement_rank_id')
+                    ->required(),
+                Forms\Components\Select::make('requirement_rank_id')
+                    ->relationship(name: 'reqRank', titleAttribute: 'name')
                     ->label('Требуемый ранг')
-                    ->required()
-                    ->numeric(),
+                    ->required(),
                 Forms\Components\TextInput::make('requirement_experience')
                     ->label('Требуемый опыт')
                     ->required()
                     ->numeric(),
                 Forms\Components\Toggle::make('is_visible')
-                    ->label('Отображение')
+                    ->label('Флаг отображения')
                     ->required(),
-                Forms\Components\DateTimePicker::make('completion_deadline'),
                 Forms\Components\Toggle::make('is_active')
+                    ->label('Флаг активности')
                     ->required(),
                 Forms\Components\TextInput::make('reward_experience')
+                    ->label('Опыт за выполнение')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('reward_gold')
+                    ->label('Валюта за выполнение')
                     ->required()
                     ->numeric(),
             ]);
@@ -78,26 +80,30 @@ class BranchResource extends Resource
                     ->label('Позиция в профиле')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('requirement_role_id')
+                Tables\Columns\TextColumn::make('reqRole.name')
+                    ->label('Требуемая роль')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('requirement_rank_id')
+                Tables\Columns\TextColumn::make('reqRank.name')
+                    ->label('Требуемый ранг')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('requirement_experience')
+                    ->label('Требуемый опыт')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_visible')
+                    ->label('Флаг отображения')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('completion_deadline')
-                    ->dateTime()
-                    ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
+                    ->label('Флаг активности')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('reward_experience')
+                    ->label('Опыт за выполнение')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('reward_gold')
+                    ->label('Валюта за выполнение')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
