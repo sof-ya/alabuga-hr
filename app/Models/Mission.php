@@ -65,11 +65,11 @@ class Mission extends Model
     }
 
     public function role() : BelongsTo {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'requirement_role_id', 'id');
     }
     
     public function requirementRank() : BelongsTo {
-        return $this->belongsTo(Rank::class);
+        return $this->belongsTo(Rank::class, 'requirement_rank_id', 'id');
     }
 
     public function users()
