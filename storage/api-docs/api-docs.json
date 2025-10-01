@@ -808,6 +808,27 @@
             "BranchRequirements": {
                 "description": "Требования и прогресс ветки",
                 "properties": {
+                    "current_branch": {
+                        "description": "Название и описание текущей ветки",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "Ветка 1"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "Описание ветки"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
                     "role": {
                         "$ref": "#/components/schemas/Role"
                     },
