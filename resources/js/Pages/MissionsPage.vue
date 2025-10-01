@@ -30,7 +30,8 @@
                     v-for="mission in missionsState.allMissions.data"
                     :title="mission.name"
                     :desc="mission.description || 'Описание отсутствует'"
-                    :progress="20"
+                    :progress="mission.progress || 0"
+                    :dataId="mission.id"
                     @show-info="showCategoryInfo(mission.id)"
                 />
 
@@ -46,7 +47,9 @@
                     v-for="mission in missionsState.activeMissions.data"
                     :title="mission.name"
                     :desc="mission.description || 'Описание отсутствует'"
-                    :progress="20"
+                    :progress="mission.progress || 0"
+                    :dataId="mission.id"
+                    dataType="active"
                     @show-info="showCategoryInfo(mission.id)"
                 />
             </div>
@@ -63,7 +66,9 @@
                         v-for="mission in missionsState.passedMissions.data"
                         :title="mission.name"
                         :desc="mission.description || 'Описание отсутствует'"
-                        :progress="20"
+                        :progress="mission.progress || 0"
+                        dataType="completed"
+                        :dataId="mission.id"
                         @show-info="showCategoryInfo(mission.id)"
                     /> 
                 </template>
