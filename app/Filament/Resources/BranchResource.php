@@ -33,7 +33,8 @@ class BranchResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->label('Описание')
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('image_url')
+                Forms\Components\FileUpload::make('image_url')
+                    ->image()
                     ->label('Изображение')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('priority_rank')
