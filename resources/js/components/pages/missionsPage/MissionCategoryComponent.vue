@@ -17,6 +17,9 @@
         <div class="progress">
             <div class="progress_persent" :style="`width: ${props.progress}%;`">{{ props.progress }}%</div>
         </div>
+        <div class="flex flex-row justify-end pt-5">
+            <button class="button" @click="emit('showInfo')">Подробнее о категории</button>
+        </div>
 
     </div>
 </template>
@@ -25,6 +28,7 @@
 import { ref } from 'vue';
 import IconComponent from '../../ui/IconComponent.vue';
 
+const emit =defineEmits(['showInfo'])
 const activity = ref(false)
 const props = defineProps({
     title:{
@@ -87,5 +91,15 @@ const toggleActivity =()=>{
         align-items: center;
         justify-content: center;
     }
-
+    .button{
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 13px;
+        color: var(--blue-600);
+        background: var(--white-500);
+        border-radius: 12px;
+        border: 1px solid var(--blue-600);
+        border-radius: 1000px;
+        padding: 4px 8px;
+    }
 </style>

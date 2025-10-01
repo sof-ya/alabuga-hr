@@ -25,7 +25,9 @@
                 <MissionCategoryComponent
                 title="Название категории"
                 desc="Описание ветки спокойно адаптируется по высоте в зависимости от количества текста"
-                :progress="20"/>
+                :progress="20"
+                @show-info="showCategoryInfo('categoryId')"
+                />
             </div>
             <div 
             v-if="activeTab === 'active'"
@@ -37,8 +39,14 @@
             class="">
                 completed
             </div>
-
+<PopUpDownLayout
+v-if="popUpState"
+@close-popup="popUpState = false"
+>
+poupupData
+</PopUpDownLayout>
         </div>
+        
     </MainLayout>
 </template>
 
@@ -47,9 +55,15 @@ import { ref } from 'vue';
 import MainLayout from '../components/Layout/MainLayout.vue';
 import ButtonWithTwoStates from '../components/ui/ButtonWithTwoStates.vue'
 import MissionCategoryComponent from '../components/pages/missionsPage/MissionCategoryComponent.vue';
+import PopUpDownLayout from '../components/Layout/PopUpDownLayout.vue'
 const activeTab=ref('all')
+const popUpState = ref(false)
 const toggleTabs = (type)=>{
     activeTab.value = type
+}
+const showCategoryInfo = (id)=>{
+    popUpState.value=true
+    console.log(id)
 }
 </script>
 
