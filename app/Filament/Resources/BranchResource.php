@@ -67,6 +67,10 @@ class BranchResource extends Resource
                     ->label('Валюта за выполнение')
                     ->required()
                     ->numeric(),
+                Forms\Components\Select::make('missions')
+                    ->relationship(name: 'missions', titleAttribute: 'name')
+                    ->label('Миссии внутри ветки')
+                    ->multiple(),
             ]);
     }
 
