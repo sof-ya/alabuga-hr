@@ -13,7 +13,7 @@ class UserMission extends Model
     protected $fillable = [
         'user_id',
         'mission_id',
-        'branch_progress'
+        'status_mission'
     ];
 
     protected function casts(): array
