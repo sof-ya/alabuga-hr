@@ -66,11 +66,20 @@ class Branch extends Model
     public function progress() : Attribute {
         return Attribute::make(
             get: function () {
+                $connectionType = config('database.default');
+                $driver = config("database.connections.{$connectionType}.driver");
+
+                if ($driver === 'pgsql') {
+                    $castExpression = "CAST(ROUND((SUM(CASE WHEN um.status_mission = 'Завершено' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 0) AS INTEGER)";
+                } else {
+                    $castExpression = "CAST(ROUND((SUM(CASE WHEN um.status_mission = 'Завершено' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 0) AS UNSIGNED)";
+                }
+
                 return $this->defaultBuilder()
                     ->select([
                         DB::raw("COUNT(*) as total_count"),
-                        DB::raw("SUM(CASE WHEN um.status_mission  = 'Завершено' THEN 1 ELSE 0 END) as finished"),
-                        DB::raw("CAST(ROUND((SUM(CASE WHEN um.status_mission  = 'Завершено' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 0) AS INTEGER) as finished_percent")
+                        DB::raw("SUM(CASE WHEN um.status_mission = 'Завершено' THEN 1 ELSE 0 END) as finished"),
+                        DB::raw("{$castExpression} as finished_percent")
                     ])
                     ->groupBy('b.id', 'b.name')->where('b.id', $this->id)->first();
             }
