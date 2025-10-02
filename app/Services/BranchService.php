@@ -92,6 +92,11 @@ class BranchService
             ->get();
 
         return [
+            'current_branch' => [
+                'id' => $branch->id,
+                'name' => $branch->name,
+                'description' => $branch->description
+            ],
             'role' => Role::find($builder->get('users.role_id')),
             'experience' => $builder->max('b.requirement_experience'),
             'branches' => $branches,

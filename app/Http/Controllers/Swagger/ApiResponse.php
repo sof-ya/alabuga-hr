@@ -78,6 +78,18 @@ use OpenApi\Attributes as OAT;
     schema: "BranchRequirements",
     description: "Требования и прогресс ветки",
     properties: [
+        new OAT\Property(
+            property: "current_branch",
+            type: "array",
+            description: "Название и описание текущей ветки",
+            items: new OAT\Items(
+                properties: [
+                    new OAT\Property(property: "id", type: "integer", example: 1),
+                    new OAT\Property(property: "name", type: "string", example: "Ветка 1"),
+                    new OAT\Property(property: "description", type: "string", example: "Описание ветки"),
+                ]
+            )
+        ),
         new OAT\Property(property: "role", ref: "#/components/schemas/Role", description: "Требуемая роль"),
         new OAT\Property(property: "experience", type: "integer", description: "Требуемый опыт", example: 1000),
         new OAT\Property(

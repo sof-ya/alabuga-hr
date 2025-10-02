@@ -14,13 +14,13 @@
 
 <script setup>
 import IconComponent from '../ui/IconComponent.vue';
-const emit = defineEmits('closePopup')
+const emit = defineEmits(['closePopup'])
 const closePopup =()=>{
     emit('closePopup')
 }
 const handleBackdropClick = (event) => {
     if (event.target.classList.contains('wrapper')) {
-        closePopup();
+          emit('closePopup')
     }
 };
 
