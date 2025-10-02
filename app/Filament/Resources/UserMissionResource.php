@@ -17,7 +17,10 @@ class UserMissionResource extends Resource
 {
     protected static ?string $model = UserMission::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-check';
+    protected static ?string $navigationLabel = 'Результаты миссий';
+    protected static ?string $modelLabel = 'Результат выполнения миссии';
+    protected static ?string $pluralModelLabel = 'Результаты миссий';
 
     public static function form(Form $form): Form
     {
@@ -25,20 +28,26 @@ class UserMissionResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
-                    ->required(),
+                    ->disabled()
+                    ->required()
+                    ->label('Имя пользователя'),
                 Forms\Components\Select::make('mission_id')
                     ->relationship('mission', 'name')
-                    ->required(),
+                    ->disabled()
+                    ->required()
+                    ->label('Название миссии'),
                 Forms\Components\Select::make('status_mission')
                     ->required()->options([
                         'Проверено' => 'Проверено',
                         'Ожидает проверку' => 'Ожидает проверку',
                         'Завершено' => 'Завершено',
-                    ]),
+                    ])
+                    ->label('Статус миссии'),
                 Forms\Components\Textarea::make('result')
-                            ->label('Текст')
-                            ->rows(4)
-                            ->columnSpanFull(),
+                    ->label('Текст')
+                    ->rows(4)
+                    ->columnSpanFull()
+                    ->label('Результат пользователя'),
             ]);
     }
 
@@ -48,20 +57,25 @@ class UserMissionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->label('Имя пользователя'),
                 Tables\Columns\TextColumn::make('mission.name')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->label('Название миссии'),
                 Tables\Columns\TextColumn::make('status_mission')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Статус миссии'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Дата создания'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Дата редактирования'),
             ])
             ->filters([
                 //
