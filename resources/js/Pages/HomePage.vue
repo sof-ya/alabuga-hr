@@ -94,7 +94,8 @@ import { useSiteState } from '../store/SiteState';
 import LkLayout from '../components/Layout/LkLayout.vue';
 import { computed, onMounted, ref } from 'vue'
 import { useUserStore } from '../store/UserStore'
-
+import { useRouter } from 'vue-router';
+const router = useRouter()
 const userStore = useUserStore()
 const siteState = useSiteState()
 const isMounted = ref(false)
