@@ -69,13 +69,13 @@
             </div> 
 
         </div>
-        <button
+        <!-- <button
             @click="callToast"
             class="bg-blue-500 text-white px-4 py-2 rounded mt-4 h-10"
         >
             CallToast
-        </button>
-        
+        </button> -->
+        <button @click="logOut"  class="bg-blue-500 text-white px-4 py-2 rounded mt-4 h-10">LogOut</button>
         <div class="flex flex-col gap-2 mt-4">
             <router-link
                 v-for="link in links"
@@ -98,7 +98,44 @@ import { useUserStore } from '../store/UserStore'
 const userStore = useUserStore()
 const siteState = useSiteState()
 const isMounted = ref(false)
+const logOut = async () => {
+    if (!confirm('Вы уверены, что хотите выйти?')) {
+        return
+    }
 
+
+    try {
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+
+        const response = await fetch('/api/auth/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                ...(csrfToken && { 'X-CSRF-TOKEN': csrfToken }),
+                ...(userStore.token && { 'Authorization': `Bearer ${userStore.token}` })
+            }
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+        userStore.logout()
+
+        await router.push('/login')
+
+    } catch (error) {
+        console.error('Logout error:', error)
+
+        userStore.logout()
+        await router.push('/login')
+    } finally {
+       
+    }
+}
 const links = [
     { route: '/', name: 'Home' },
     { route: '/about', name: 'About' },
