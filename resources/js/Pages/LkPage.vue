@@ -42,13 +42,13 @@ const logOut = async () => {
 
         userStore.logout()
 
-        await router.push('/divorce')
+        await router.push('login')
 
     } catch (error) {
         console.error('Logout error:', error)
 
         userStore.logout()
-        await router.push('/divorce')
+        await router.push('login')
     } finally {
         loading.value = false
     }
