@@ -1,61 +1,110 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Мотивационный модуль геймификации для кадровой системы ОЭЗ Алабуга
+> Разработано в рамках хакатона "Лидеры цифровой трансформации 2025". Направление Бизнес, задача №9.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Команда 
+* [Куликова Софья - Капитан команды, Backend-разработчик](https://github.com/sof-ya)
+    - Создание API приложения
+    - Создание панели администратора
+    - Публикация проекта на хостинге
+* [Криницкий Виталий - Frontend-разработчик](https://github.com/TheFasWalker)
+    - Создание верстки по макету
+    - Вывод данных из API на страницы
+* Майорова Юлия - Web- & UI/UX-дизайнер
+    - Разработка прототипа приложения
+    - Разработка дизайна приложения
+* Шаманин Илья - Project-manager
+    - Распределение и контроль выполнения задач
+    - Анализ требований заказчика
+* Дмитрией Алексей - Системный аналитик
+    - Разработка ТЗ для приложения
+    - Проектирование БД
+    - Проектирование интерфейсов для дизайна
 
-## About Laravel
+## Архитектура
+Проект представляет собой компонентно-ориентированное SPA: Laravel используется для бэкенда, а Vue для фронтенда. Для создания панели администратора был использован пакет FilamentPHP.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Основные характеристики:
+* Разделение клиента и сервера
+* Сервис-ориентированная логика
+* Четкие границы ответственности
+* Централизованное управление состоянием
+* Клиентская маршрутизация
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Компоненты архитектуры бэкенда
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Слой данных
+    - Реляционная СУБД PostgreSQL;
+    - Eloquent Models - используются для формирования связей между таблицами и в построении запросов к БД;
+    - Factories&Seeders - используются для генерации тестовых данных.
+2. Слой бизнес-логики
+    - Service Classes - изпользуются для инкапсуляции сложной бизнес-логики.
+3. Слой представления
+    - Controllers - используются для обработки HTTP-запросов и вызова необходимых сервисов;
+    - Requests - используются для валидации входящих POST, PUT, PATCH запросов;
+    - Resources&Collections - используются для преобразования возвращаемых данных;
+    - BaseResponse - используется для универсального формата ответа.
+4. Слой безопасности
+    - JWT-токены - используется для бессерверной аутентификации.
 
-## Learning Laravel
+### Компоненты архитектуры фронтенда
+1. Слой управления состоянием
+    - Pinia Stores - централизованное хранилище состояния приложения.
+2. Слой маршрутизации
+    - Vue Router - используется для клиентской маршрутизации.
+3. Слой компонентов и стилей
+    - Чистый CSS, Scoped-стили;
+    - Иерархия и переиспользование компонентов.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Реализованные механики
+### HR
+* CRUD для создания миссий 
+* CRUD для создания веток
+* Связывание миссий с ветками
+* Проверка результата выполнения задания
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Кандидат
+* Просмотр информации об аккаунте
+* Просмотр товаров из магазина
+* Получение опыта за выполненные миссии
+* Просмотр веток, миссий и требований к веткам
+* Просмотр информации пользователя
+* API для просмотра списка компетенций 
+* API для просмотра списка товаров и купленных товаров
+* API для просмотра рейтинга игроков и позиции авторизованного игрока
+* API для отправки результата миссии на проверку 
 
-## Laravel Sponsors
+## Нереализованные механики
+* Нет возможности редактировать профиль пользователя
+* Нет возможности зарегистрироваться
+* Не задействованы компетенции пользователя
+* Нет возможности отправить миссию на проверку из интерфейса
+* Просмотр действий пользователя
+* Уведомления
+* Онбординг пользователя
+* Статистика по пользователям для HR
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+>Все механики не были реализованы в следствие нехватки времени и отстутствии опыта участия в хакатонах :)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Инструкция к запуску
+> Запуск на Проект запускается на Linux или через WSL
+1. Создать файл .env: `cp .env.example .env`, добавить переменные для подключения к БД
+2. Сгенерировать папку vendor: `composer install`
+3. Запуск сервера: `sail up -d`
 
-## Code of Conduct
+>Для того, чтобы выполнять запуск с помощью sail, необходимо в файл **.bashrc** (Находится в корневой дериктории пользователя) добавить `alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'`. Либо запускать через `./vendor/bin/sail`
+4. Сгенерировать новый ключ приложения: `sail artisan key:generate`
+5. Сгенерировать новый ключ токена: `sail php artisan jwt:secret`
+6. Выполнить миграции таблиц:`sail artisan migrate`
+7. Выполнить миграции таблиц:`sail artisan db:seed`
+8. Установить npm `composer npm install`
+8. Собрать стили для приложения `composer npm run build`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Ссылки
+* [Демо](http://sofjaknk.beget.tech) 
+* Документация Swagger на эндпоинте `/api/documentation` 
+* Панель администратора на `/hr`
