@@ -19,16 +19,15 @@ class DatabaseSeeder extends Seeder
 
         $this->call(MissionCategorySeeder::class);
         $this->call(CompetenceSeeder::class);
-        $this->call(MissionSeeder::class);
-        $this->call(MissionRewardCompetenceSeeder::class);
         $this->call(StoreItemSeeder::class);
         $this->call(BranchSeeder::class);
+        $this->call(MissionRewardCompetenceSeeder::class);
 
         User::factory()->create([
             'name' => 'Test User',
             'nikname' => 'Test_User',
             'email' => 'test@example.com',
-            'role_id' => Role::first()->id,
+            'role_id' => Role::where('name', 'HR')->first()->id,
             'rank_id' => Rank::first()->id,
             'experience' => 0,
             'gold' => 10

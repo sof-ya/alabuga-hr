@@ -20,10 +20,10 @@ class BranchFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->title(),
+            'name' => fake()->words(3, true),
             'description' => fake()->text(),
             'priority_rank' => fake()->unique()->randomNumber(Branch::all()->count()+1),
-            'requirement_role_id' => Role::all()->random()->id,
+            'requirement_role_id' => Role::where('name', 'Кандидат')->first()->id,
             'requirement_rank_id' => Rank::all()->random()->id,
             'requirement_experience' => fake()->numberBetween(0, 100),
             'is_visible' => true,

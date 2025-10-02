@@ -20,11 +20,11 @@ class MissionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->words(3, true),
             'description' => fake()->text(),
             'completion_deadline' => fake()->dateTimeBetween('now', '+30 days'),
             'mission_category_id' => MissionCategory::all()->random()->id,
-            'requirement_role_id' => Role::all()->random()->id,
+            'requirement_role_id' => Role::where('name', 'Кандидат')->first()->id,
             'requirement_rank_id' => Rank::all()->random()->id,
             'requirement_experience' => fake()->numberBetween(0, 100),
             'is_visible' => true,
