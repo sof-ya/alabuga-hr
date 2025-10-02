@@ -20,8 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('mission_id')->comment('Идентификатор миссии');
             $table->foreign('mission_id')->references('id')->on('missions')->onDelete('cascade');
 
-            $table->integer('mission_order')->comment('Порядковый номер миссии');
-            $table->boolean('is_active')->comment('Активна или выключена миссия в ветке');
+            $table->bigInteger('mission_order')->nullable()->comment('Порядковый номер миссии');
+            $table->boolean('is_active')->default(true)->comment('Активна или выключена миссия в ветке');
             $table->timestamps();
         });
     }

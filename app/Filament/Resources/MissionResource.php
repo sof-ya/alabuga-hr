@@ -73,6 +73,9 @@ class MissionResource extends Resource
                     ->required()
                     ->numeric()
                     ->label('Валюта за выполнение'),
+                Forms\Components\Select::make('branches')
+                    ->relationship(name: 'branches', titleAttribute: 'name')
+                    ->label('Привязать к ветке'),
             ]);
     }
 

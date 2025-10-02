@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use OpenApi\Attributes as OAT;
 
 #[OAT\Schema(
@@ -96,5 +97,10 @@ class Mission extends Model
                 return $user ? $user->pivot->result : null;
             }
         );
+    }
+
+    public function branches() : BelongsToMany
+    {
+        return $this->belongsToMany(Branch::class, 'branch_missions');
     }
 }
