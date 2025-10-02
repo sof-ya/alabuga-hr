@@ -97,8 +97,8 @@ class BranchService
                 'name' => $branch->name,
                 'description' => $branch->description
             ],
-            'role' => Role::find($builder->get('users.role_id')),
-            'experience' => $builder->max('b.requirement_experience'),
+            'role' => Role::find($branch->requirement_role_id),
+            'experience' => $branch->requirement_experience,
             'branches' => $branches,
             'missions' => $missions
         ];
