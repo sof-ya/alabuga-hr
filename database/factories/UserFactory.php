@@ -35,7 +35,7 @@ class UserFactory extends Factory
             'gold' => fake()->numberBetween(0, 100),
             'birthday_date' => fake()->dateTimeBetween('-30 years', 'now'),
             'remember_token' => Str::random(10),
-            'role_id' => Role::all()->random()->id,
+            'role_id' => Role::where('name', 'Кандидат')->first()->id,
             'rank_id' => Rank::all()->random()->id,
         ];
     }
